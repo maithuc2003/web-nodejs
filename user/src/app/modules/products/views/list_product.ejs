@@ -1,0 +1,99 @@
+<%- get_layout("header") %>
+
+    <div id="content" class="mt-2 mb-2">
+        <div id="products" class="mt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <%- get_layout("filter_product") %>
+                            <%- get_layout("feature_product") %>
+                    </div>
+                    <div class="col-md-9">
+                        <%- get_layout("support") %>
+                            <div class="section-detail mt-5">
+                                <h1 class="text-center">Sẩn phẩm</h1>
+                                </h1>
+                                <div class="row" id="productList">
+                                    <% products.forEach((product)=> { %>
+                                        <div class="col-md-4 mb-4 col-sm-6 col-12">
+                                            <div class="border product p-2 rounded shadow-sm h-100">
+                                                <a href="/san-pham/<%= product._id %>">
+                                                    <img class="img-fluid w-100"
+                                                        style="height: 200px; object-fit: cover;"
+                                                        src="<%= BASE_URL + product.featured_image %>"
+                                                        alt="<%= product.product_name %>">
+                                                </a>
+                                                <div class="sub text-center mt-3">
+                                                    <a href="/san-pham/<%= product._id %>"
+                                                        class="fw-bold text-decoration-none text-dark">
+                                                        <%= product.product_name %>
+                                                    </a>
+
+                                                    <div class="price mt-2 mb-2">
+                                                        <span class="new text-danger fw-bold">
+                                                            <%= product.product_new_price.toLocaleString("vi-VN") %>
+                                                                đ
+                                                        </span>
+                                                        <% if (product.product_old_price) { %>
+                                                            <span
+                                                                class="old text-muted text-decoration-line-through ms-2">
+                                                                <%= product.product_old_price.toLocaleString("vi-VN") %>
+                                                                    đ
+                                                            </span>
+                                                            <% } %>
+                                                    </div>
+                                                    <button type="button"
+                                                        class="btn btn-outline-danger btn-sm mb-2 btn-buy"
+                                                        data-product-id="<%= product._id %>">ĐẶT MUA</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% }) %>
+                                </div>
+                            </div>
+                            <div class="section-footer">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <nav>
+                                            <ul class="pagination pagination-sm justify-content-center">
+                                                <% if (currentPage> 1) { %>
+                                                    <li class="page-item">
+                                                        <a href="/san-pham/<%= category.category_slug %>/<%= category._id %>/page/<%= currentPage - 1 %>"
+                                                            class="page-link">&laquo;</a>
+                                                    </li>
+                                                    <% } %>
+                                                        <% for (let i=1; i <=totalPages; i++) { %>
+                                                            <li
+                                                                class="page-item <%= i === currentPage ? 'active' : '' %>">
+                                                                <a href="/san-pham/<%= category.category_slug %>/<%= category._id %>/page/<%= i %>"
+                                                                    class="page-link">
+                                                                    <%= i %>
+                                                                </a>
+                                                            </li>
+                                                            <% } %>
+                                                                <% if (currentPage < totalPages) { %>
+                                                                    <li class="page-item">
+                                                                        <a href="/san-pham/<%= category.category_slug %>/<%= category._id %>/page/<%= currentPage + 1 %>"
+                                                                            class="page-link">&raquo;</a>
+                                                                    </li>
+                                                                    <% } %>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Thông báo -->
+    <div id="success-toast" style="display: none; position: fixed; top: 20px; right: 20px; z-index: 9999;">
+        <div class="toast-box bg-light border shadow rounded px-3 py-2">
+            <i class="fa-solid fa-circle-check text-success me-2"></i>
+            <span>Đã thêm vào giỏ hàng!</span>
+        </div>
+    </div>
+
+    <%- get_layout("footer") %>

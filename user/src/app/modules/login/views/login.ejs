@@ -1,0 +1,67 @@
+<%- get_layout("header") %>
+    <div id="content" class="mt-2 mb-2">
+        <div id="wp-form-login" class="mt-5">
+            <h1 class="text-sm-center h2">Đăng nhập</h1>
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col-8">
+                        <form method="POST" action="/dang-nhap">
+                            <div class="form-group mt-4 ">
+                                <label for="username" class="h6">Tên đăng nhập</label>
+                                <input type="text" class="form-control border-bottom rounded" name="username"
+                                    id="username" placeholder="Nhập tên đăng nhập" value="">
+                                <span class="" id="username-error"></span>
+                                <% if (typeof error !=="undefined" && error) { %>
+                                    <span style="color: red;" id="login-error">
+                                        <%= error %>
+                                    </span>
+                                    <% } %>
+                            </div>
+                            <div class="form-group mt-4">
+                                <label for="password" class="h6">Mật khẩu</label>
+                                <input type="password" class="form-control border-bottom rounded" name="password"
+                                    id="password" placeholder="Mật khẩu">
+                            </div>
+                            <div class="form-group form-check mt-4">
+                                <input type="checkbox" class="form-check-input" name="checkbox" id="checkbox">
+                                <label for="checkbox" class="form-check-label">Lưu đăng nhập</label>
+                            </div>
+                            <button type="submit" name="btn_login" class="btn btn-outline-primary btn-block">Đăng
+                                nhập</button>
+                        </form>
+                    </div>
+                    <div class="col-md-12 text-sm-center mt-4">
+                        <span class="d-block"> Bạn chưa có tài khoản<a id="reg" href="/dang-ky"> Đăng ký</a>
+                            ngay</span>
+                        <a class="" href="quen-mat-khau" id="rest">Quên mật khẩu</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const usernameInput = document.getElementById("username");
+            const errorMessage = document.getElementById("username-error");
+            const logInErrorMessage = document.getElementById("login-error");
+
+            usernameInput.addEventListener("input", function () {
+                const username = usernameInput.value;
+                const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+
+                if (logInErrorMessage)
+                    logInErrorMessage.textContent = "";
+
+                if (!usernameRegex.test(username)) {
+                    errorMessage.textContent = "Tên đăng nhập phải từ 3-20 ký tự, chỉ chứa chữ cái, số và dấu gạch dưới (_).";
+                    errorMessage.style.color = "red";
+                } else {
+                    errorMessage.textContent = "";
+                }
+            });
+        });
+    </script>
+
+    <%- get_layout("footer") %>

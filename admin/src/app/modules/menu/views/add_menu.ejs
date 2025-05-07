@@ -1,0 +1,49 @@
+<%- get_layout("header") %>
+
+  <div id="content" class="mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-3  border-right">
+        <%- get_layout("sidebar") %>
+      </div>
+      <div class="col-md-9">
+        <h3>Thêm menu</h3>
+        <div class="col-md-7">
+          <% if (typeof success !=="undefined" ) { %>
+            <div class="alert alert-success">
+              <%= success %>
+            </div>
+            <% } %>
+              <% if (typeof error !=="undefined" ) { %>
+                <div class="alert alert-danger">
+                  <%= error %>
+                </div>
+                <% } %>
+                  <form method="POST" action="/menu/add">
+                    <div class="form-group mt-4">
+                      <label for="username" class="h6">Tên menu</label>
+                      <input type="text" class="form-control form-control-sm" name="title" id="title" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="username" class="h6">Slug (Friendly_url )</label>
+                      <input type="text" class="form-control form-control-sm" name="slug" id="slug" value="">
+                    </div>
+                    <div class="form-group clearfix mb-3">
+                      <label class="mb-2">Chọn vị trí hiển thị menu</label>
+                      <% MenuPositions.forEach(position=> { %> <!-- Vòng lặp foreach qua các vị trí menu -->
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="select_menu" id="menu_<%= position._id %>"
+                            value="<%= position.position_name %>">
+                          <label class="form-check-label" for="menu_<%= position._id %>">
+                            <%= position.position_name %>
+                          </label>
+                        </div>
+                        <% }); %>
+                    </div>
+                    <button type="submit" name="btn_login" class="btn btn-outline-primary btn-block">Thêm</button>
+                  </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- get_layout("footer") %>

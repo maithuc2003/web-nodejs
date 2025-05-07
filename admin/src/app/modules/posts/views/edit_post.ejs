@@ -1,0 +1,88 @@
+<%- get_layout("header") %>
+  <div id="content" class="mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-3  border-right">
+        <%- get_layout("sidebar") %>
+      </div>
+      <div class="col-md-9">
+        <h3>CẬP NHẬT BÀI VIẾT</h3>
+        <form method="POST" action="/bai-viet/<%= post._id%>?_method=PUT" enctype="multipart/form-data">
+          <div class="col-md-7">
+            <div class="form-group mt-4">
+              <label for="title" class="h6">Tiêu đề</label>
+              <input type="text" class="form-control form-control-sm" name="post_title" id="title"
+                value="<%= post.post_title%>">
+            </div>
+            <div class="form-group">
+              <label for="username" class="h6">Slug (Friendly_url )</label>
+              <input type="text" class="form-control form-control-sm" name="slug" id="slug"
+                value="<%= post.post_slug %>">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="post_excerpt">Mô tả ngắn</label>
+              <textarea class="form-control" name="post_excerpt" id="desc" rows="3"><%= post.post_excerpt%></textarea>
+            </div>
+            <div class="form-group">
+              <label for="post_content">Nội dung</label>
+              <textarea class="form-control" name="post_content" id="detail" rows="3"><%= post.post_content%></textarea>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="form-group">
+              <label for="user" class="h6">Người tạo</label>
+              <input type="text" class="form-control form-control-sm" name="user" id="user"
+                value="<%=  post.admin_id.username %>" readonly>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col">
+                  <label for="update" class="h6">Cập nhật</label>
+                  <input type="text" class="form-control form-control-sm" name="update" id="update"
+                    value="<%=formatDate(post.updatedAt)%>" readonly>
+                </div>
+                <div class="col">
+                  <label for="created" class="h6">Thời gian</label>
+                  <input type="text" class="form-control form-control-sm" name="created" id="created"
+                    value="<%=formatDate(post.createdAt) %>" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="post_status">Trạng thái</label>
+              <select class="form-control form-control-sm" name="post_status" id="post_status">
+                <option value="draft" <%=post.post_status=="draft" ? "selected" : "" %>>Bản nháp</option>
+                <option value="published" <%=post.post_status=="published" ? "selected" : "" %>>Đã đăng</option>
+                <option value="pending" <%=post.post_status=="pending" ? "selected" : "" %>>Chờ duyệt</option>
+                <option value="archived" <%=post.post_status=="archived" ? "selected" : "" %>>Đã lưu trữ</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="post_cat">Danh mục bài viết</label>
+              <select class="form-control form-control-sm" name="post_cat" id="post_cat" multiple>
+                <% listPostCat.forEach(category => { %>
+                  <option value="<%= category.id %>" 
+                      <%= Array.isArray(post_cat) && post_cat.includes(category.id.toString()) ? "selected" : "" %>
+                  >
+                      <%= category.category_name %>
+                  </option>
+              <% }) %>
+              
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="thumb_img">Hình ảnh</label>
+              <input type="file" class="form-control-file" name="thumb_img" id="thumb_img">
+            </div>
+            <div class="mt-2 d-flex flex-wrap">
+              <img src="<%= BASE_URL + post.post_image %>" width="100" class="mr-2">
+            </div>
+            <button type="submit" name="btn_login" class="btn btn-outline-primary btn-block">Cập nhật</button>
+          </div>
+      </div>
+      </form>
+    </div>
+  </div>
+  </div>
+  <%- get_layout("footer") %>

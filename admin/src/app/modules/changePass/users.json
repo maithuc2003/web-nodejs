@@ -1,0 +1,29 @@
+[
+    {
+        "user_id": 1,
+        "username": "admin",
+        "email": "admin@example.com",
+        "password_hash": "$2b$10$VjYp6J8W.T5Kz2k5O/dfquCZR5hy1DdPpeScZGxkWfbHGVyo1LS3K", // hash của "password123"
+        "fullname": "John Doe",
+        "created_at": "2024-03-25T08:00:00Z",
+        "updated_at": "2024-03-25T08:00:00Z"
+    },
+    {
+        "user_id": 2,
+        "username": "janedoe",
+        "email": "janedoe@example.com",
+        "password_hash": "$2b$10$A1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6Q7R8S9T0U1V2W3X4Y5Z6A", // hash của "securepass"
+        "fullname": "Jane Doe",
+        "created_at": "2024-03-25T08:10:00Z",
+        "updated_at": "2024-03-25T08:10:00Z"
+    },
+    {
+        "user_id": 3,
+        "username": "alice",
+        "email": "alice@example.com",
+        "password_hash": "$2b$10$X5Y6Z7A8B9C0D1E2F3G4H5I6J7K8L9M0N1O2P3Q4R5S6T7U8V9W0X", // hash của "mypassword"
+        "fullname": "Alice Johnson",
+        "created_at": "2024-03-25T08:20:00Z",
+        "updated_at": "2024-03-25T08:20:00Z"
+    }
+]

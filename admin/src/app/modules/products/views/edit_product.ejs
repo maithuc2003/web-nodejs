@@ -1,0 +1,121 @@
+<%- get_layout("header") %>
+  <div id="content" class="mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-3  border-right">
+        <%- get_layout("sidebar") %>
+      </div>
+      <div class="col-md-9">
+        <h3>Cập nhật sản phẩm</h3>
+        <form method="POST" action="/sanpham/edit/<%= product._id %>" enctype="multipart/form-data">
+          <div class="col-md-7">
+            <div class="form-group mt-4">
+              <label for="title" class="h6">Tiêu đề</label>
+              <input type="text" class="form-control form-control-sm" name="title" id="title"
+                value="<%= product.product_name %>">
+            </div>
+            <div class="form-group">
+              <label for="slug" class="h6">Slug (Friendly_url)</label>
+              <input type="text" class="form-control form-control-sm" name="slug" id="slug"
+                value="<%= product.product_slug %>">
+            </div>
+
+            <div class="form-group">
+              <label for="stock_quantity" class="h6">Số lượng hàng tồn kho</label>
+              <input type="number" min="0" class="form-control form-control-sm" name="stock_quantity"
+                id="stock_quantity" value="<%= product.stock_quantity %>">
+            </div>
+
+            <div class="form-group">
+              <label for="new_price" class="h6">Giá mới</label>
+              <input type="number" min="0" class="form-control form-control-sm" name="new_price" id="new_price"
+                value="<%= product.product_new_price %>">
+            </div>
+
+            <div class="form-group">
+              <label for="old_price" class="h6">Giá cũ</label>
+              <input type="number" min="0" class="form-control form-control-sm" name="old_price" id="old_price"
+                value="<%= product.product_old_price %>">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="desc">Mô tả ngắn</label>
+              <textarea class="form-control" name="desc" id="desc" rows="3"><%= product.product_desc %></textarea>
+            </div>
+            <div class="form-group">
+              <label for="detail">Mô tả chi tiết</label>
+              <textarea class="form-control" name="detail" id="detail"
+                rows="3"><%= product.product_details %></textarea>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="form-group">
+              <label for="is_featured">Đặc điểm</label>
+              <select class="form-control form-control-sm" name="is_featured" id="is_featured">
+                <option value="1" <%=product.is_featured==1 ? "selected" : "" %>>Bán chạy</option>
+                <option value="0" <%=product.is_featured==0 ? "selected" : "" %>>Bình thường</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="status">Trạng thái</label>
+              <select class="form-control form-control-sm" name="status" id="status">
+                <option value="active" <%=product.product_status=="active" ? "selected" : "" %>>Đang hoạt động
+                </option>
+                <option value="inactive" <%=product.product_status=="inactive" ? "selected" : "" %>>Không hoạt
+                  động</option>
+                <option value="out_of_stock" <%=product.product_status=="out_of_stock" ? "selected" : "" %>>Hết
+                  Hàng</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="product_cat">Danh mục sản phẩm</label>
+              <select name="product_cat" id="product_cat" multiple class="form-control">
+                <% listProductCat.forEach(category => { %>
+                  <option value="<%= category._id %>" <%= product_cat.includes(category._id.toString()) ? 'selected' : '' %>>
+                    <%= category.category_name %>
+                  </option>
+                <% }) %>
+              </select>
+              
+            </div>
+            <div class="form-group">
+              <label for="user" class="h6">Người tạo</label>
+              <input type="text" class="form-control form-control-sm" name="user" id="user"
+                value="<%=  product.admin_id.username %>" readonly>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col">
+                  <label for="update" class="h6">Cập nhật</label>
+                  <input type="text" class="form-control form-control-sm" name="update" id="update"
+                    value="<%=formatDate(product.updatedAt)%>" readonly>
+                </div>
+                <div class="col">
+                  <label for="created" class="h6">Thời gian</label>
+                  <input type="text" class="form-control form-control-sm" name="created" id="created"
+                    value="<%=formatDate(product.createdAt) %>" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="thumb_img">Hình ảnh</label>
+              <input type="file" class="form-control-file" name="thumb_img" id="thumb_img" multiple>
+              <div class="mt-2 d-flex flex-wrap">
+                <% product.product_images.forEach((image, i)=> { %>
+                  <div class="form-check mt-3 ">
+                    <label class="form-check-label" for="img<%= i %>">
+                      <img src="<%= BASE_URL + image %>" width="100" class="mr-2">
+                    </label>
+                    <input class="form-check-input" type="radio" id="img<%= i %>" name="selected_img"
+                      value="<%=image %>" <%=product.featured_image==image ? "checked" : "" %> >
+                  </div>
+                  <% }) %>
+              </div>
+            </div>
+            <button type="submit" name="btn_update" class="btn btn-outline-primary btn-block">Cập nhật</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <%- get_layout("footer") %>

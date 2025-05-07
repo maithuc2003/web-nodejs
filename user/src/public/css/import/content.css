@@ -1,0 +1,43 @@
+#content #products .section-head .section-title {
+    display: block;
+    font-size: 20px;
+    text-transform: uppercase;
+    background: #969696;
+    color: #fff;
+    padding: 15px;
+    border-bottom: 1px solid #dadada;
+}
+
+#content #products .section-detail .product-name {
+    color: #333;
+    line-height: 24px;
+    max-height: 100%;
+    margin-bottom: 2px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#content #products .section-detail .info .price .new {
+    color: red;
+    max-height: 100%;
+    margin-bottom: 2px;
+    font-weight: bold;
+    text-decoration: none;
+}
+#content #products .section-detail .info .price .old {
+    color: #999;
+    text-decoration: line-through;
+    font-size: 13px;
+}
+
+#content #products .section-detail .info .buy-now {
+    color: red;
+    font-weight: bold;
+    font-size: 13px;
+    /* text-decoration: none; */
+}
+#content #products #support-wp .desc  {
+    font-size: 13px;
+    color: #8e8e8e;
+    line-height: normal;
+}

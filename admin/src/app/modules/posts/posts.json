@@ -1,0 +1,38 @@
+[
+	{
+		"post_id": 1,
+		"post_title": "Ghế đá công viên bền đẹp",
+		"post_slug": "ghe-da-cong-vien-ben-dep",
+		"post_excerpt": "Ghế đá công viên với thiết kế chắc chắn, bền bỉ theo thời gian.",
+		"post_content": "Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+		"post_status": "published",
+		"admin_id": 101,
+		"image_id": 1,
+		"created_at": "2025-03-15T12:00:00Z",
+		"updated_at": "2025-03-15T12:00:00Z"
+	},
+	{
+		"post_id": 2,
+		"post_title": "Bàn ghế gỗ ngoài trời sang trọng",
+		"post_slug": "ban-ghe-go-ngoai-troi-sang-trong",
+		"post_excerpt": "Bộ bàn ghế gỗ cao cấp cho không gian ngoài trời, phù hợp sân vườn và ban công.",
+		"post_content": "Bàn ghế gỗ ngoài trời được làm từ chất liệu cao cấp, chịu được thời tiết khắc nghiệt và mang lại cảm giác sang trọng. Thiết kế tinh tế phù hợp với nhiều phong cách không gian.",
+		"post_status": "draft",
+		"admin_id": 102,
+		"image_id": 2,
+		"created_at": "2025-03-16T14:30:00Z",
+		"updated_at": "2025-03-16T14:30:00Z"
+	},
+	{
+		"post_id": 3,
+		"post_title": "Xích đu sắt nghệ thuật cho sân vườn",
+		"post_slug": "xich-du-sat-nghe-thuat-san-vuon",
+		"post_excerpt": "Xích đu sắt nghệ thuật mang đến vẻ đẹp cổ điển và sang trọng cho không gian sân vườn.",
+		"post_content": "Xích đu sắt nghệ thuật được thiết kế với họa tiết tinh xảo, phù hợp cho sân vườn, ban công hoặc hiên nhà. Sản phẩm có độ bền cao và tạo điểm nhấn ấn tượng cho không gian sống.",
+		"post_status": "pending",
+		"admin_id": 103,
+		"image_id": 3,
+		"created_at": "2025-03-17T09:00:00Z",
+		"updated_at": "2025-03-17T09:00:00Z"
+	}
+]

@@ -1,0 +1,4 @@
+#content #main-content-wp #wrapper #news .info a {text-decoration: none; color: black;}
+#content #main-content-wp #wrapper #news .info a.title {font-size: 16px; font-weight: bold;}
+#content #main-content-wp #wrapper #news .info  p {text-align: justify;}
+

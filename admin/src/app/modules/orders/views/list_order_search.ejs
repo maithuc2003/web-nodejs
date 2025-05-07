@@ -1,0 +1,154 @@
+<%- get_layout("header") %>
+  <div id="content" class="mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-3  border-right">
+        <%- get_layout("sidebar") %>
+      </div>
+      <div class="col-md-9">
+        <div class="row m-3">
+          <!-- BÊN TRÁI: Danh mục & Trạng thái -->
+          <div class="col-md-7">
+            <div class="form-inline">
+              <a href="/ban-hang" class="btn btn-secondary mr-2" id="showAllBtn">Tất cả</a>
+              <div class="form-group m-2">
+                <select class="form-control" id="statusFilterOrder" name="status">
+                  <option value="">Trạng thái</option>
+                  <option value="pending">Chờ duyệt</option>
+                  <option value="processing">Đang vận chuyển</option>
+                  <option value="shipped">Đã gửi hàng</option>
+                  <option value="delivered">Thành công</option>
+                  <option value="canceled">Đã huỷ</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- BÊN PHẢI: Tìm theo tên -->
+          <div class="col-md-5 text-right">
+            <form class="form-inline justify-content-end" action="/bai-viet/search" method="GET">
+              <div class="form-group mr-2">
+                <input type="text" class="form-control" name="q" placeholder="Tìm theo tên sản phẩm">
+              </div>
+              <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div id="main-content-wp" class="cart-page">
+            <div class="section" id="info-cart-wp">
+              <div class="section-detail table-responsive">
+                <div class="d-flex justify-content-between align-items-center mb-2 px-2">
+                  <p class="mb-0" id="totalOrder">
+                    Hiện: <strong><span id="pageCount">
+                        <%= orders.length %>
+                      </span></strong> / <strong><span id="pageCountAll">
+                        <%= totalResults %>
+                      </span></strong> đơn hàng
+                  </p>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Mã đơn hàng</th>
+                      <th>Khách hàng</th>
+                      <th>Trạng thái</th>
+                      <th>SĐT khách hàng</th>
+                      <th>Thời gian</th>
+                      <th>Cập nhật</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% orders.forEach((order, index)=> { %>
+                      <tr>
+                        <td>
+                          <%= stt_page + index + 1%>
+                        </td>
+                        <td>
+                          <ul class="list-inline">
+                            <li class="list-inline-item">
+                              <%= order.order_id%>
+                            </li>
+                            <li class="list-inline-item">
+                              <a href="/ban-hang/<%= order._id%>" title="detail order" class="update-order">
+                                <i class="fa-solid fa-pencil"></i>
+                              </a>
+                            </li>
+                            <li class="list-inline-item">
+                              <a href="" title="Delete order" class="del-order">
+                                <i class="fa-solid fa-trash"></i>
+                              </a>
+
+                              <form id="delete-order-form" method="POST"
+                                action="/ban-hang/<%= order._id%>?_method=DELETE" style="display: none;">
+                                <input type="hidden" name="_method" value="DELETE" />
+                              </form>
+                            </li>
+                          </ul>
+                        </td>
+                        <td>
+                          <%= order.fullname%>
+                        </td>
+                        <td>
+                          <%= order.status==='pending' ? 'chờ duyệt' : '' %>
+                            <%= order.status==='processing' ? 'đang vận chuyển' : '' %>
+                              <%= order.status==='shipped' ? 'đã gửi hàng' : '' %>
+                                <%= order.status==='delivered' ? 'thành công' : '' %>
+                                  <%= order.status==='cancled' ? 'đã huỷ' : '' %>
+                        </td>
+                        <td>
+                          <%= order.phone%>
+                        </td>
+                        <td>
+                          <%= new Date(order.createdAt).toLocaleString('vi-VN')%>
+                        </td>
+                        <td>
+                          <%= new Date(order.updatedAt).toLocaleString('vi-VN')%>
+                        </td>
+                      </tr>
+                      <% }); %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <nav id="paginationAjax">
+                  <ul class="pagination pagination-sm justify-content-center">
+                    <% if (currentPage> 1) { %>
+                      <li class="page-item">
+                        <a href="/ban-hang/search?q=<%= query %>&page=<%= currentPage - 1 %>"
+                          class="page-link">&laquo;</a>
+                      </li>
+                      <% } %>
+
+                        <% for (let i=1; i <=totalPages; i++) { %>
+                          <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                            <a href="/ban-hang/search?q=<%= query %>&page=<%= i %>" class="page-link">
+                              <%= i %>
+                            </a>
+                          </li>
+                          <% } %>
+
+                            <% if (currentPage < totalPages) { %>
+                              <li class="page-item">
+                                <a href="/ban-hang/search?q=<%= query %>&page=<%= currentPage + 1 %>"
+                                  class="page-link">&raquo;</a>
+                              </li>
+                              <% } %>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  </script>
+  <%- get_layout("footer") %>

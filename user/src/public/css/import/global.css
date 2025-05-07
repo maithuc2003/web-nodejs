@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    /* font-size: 14px ; */
+    margin: 0px;
+    padding: 0px;
+    line-height: 24px;
+}
+
+.price .new {
+    color: red;
+    max-height: 100%;
+    margin-bottom: 2px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.price .old {
+    color: #999;
+    text-decoration: line-through;
+    font-size: 13px;
+}
+
+/* Khi hover vào thẻ a thì đổi màu chữ */
+.sub a {
+    text-decoration: none;
+    color: black;
+}
+
+
+/* Khi hover vào thẻ a thì đổi màu chữ */
+.sub a:hover {
+    color: red !important;
+}
+
+.toast-box {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid #d1e7dd;
+    border-radius: 12px;
+    padding: 12px 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+    color: #198754;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.toast-box i {
+    font-size: 20px;
+    color: #198754;
+    /* Màu xanh kiểu Bootstrap */
+    margin-right: 10px;
+}
+
+
+
+/* Đảm bảo dropdown menu không bị che khuất */
+.nav-item.dropdown .dropdown-menu {
+    position: absolute;
+    z-index: 1060 !important;
+    /* Đảm bảo dropdown menu luôn hiển thị trên cùng */
+}
+

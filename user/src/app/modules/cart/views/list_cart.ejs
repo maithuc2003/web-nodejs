@@ -1,0 +1,269 @@
+<%- get_layout("header") %>
+  <style>
+    .toast-box {
+      display: flex;
+      align-items: center;
+      background-color: #ffffff;
+      border: 1px solid #d1e7dd;
+      border-radius: 12px;
+      padding: 12px 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      font-weight: 500;
+      color: #198754;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .toast-box i {
+      font-size: 20px;
+      color: #198754; /* Màu xanh kiểu Bootstrap */
+      margin-right: 10px;
+    }
+  </style>
+
+    <div id="content" class="mt-2 mb-2">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="main-content-wp" class="cart-page">
+                        <div class="section" id="info-cart-wp">
+                            <div class="section-detail table-responsive">
+                                <% if (products && products.length > 0) { %>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã sản phẩm</th>
+                                            <th>Ảnh sản phẩm</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Giá sản phẩm</th>
+                                            <th>Số lượng</th>
+                                            <th colspan="2">Thành tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% products.forEach((product)=> { %>
+                                            <tr class="cart-item" data-product-id="<%=product._id%>">
+                                                <td><%= product._id%></td>
+                                                <td>
+                                                    <a href="/san-pham/<%= product._id%>" title="<%= product.product_name%>" class="thumb">
+                                                        <img src="<%= BASE_URL + product.product_images[0]%>" alt="<%= product.product_name%>">
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="/san-pham/<%= product._id%>" title="<%= product.product_name%>" class="name-product">
+                                                        <%= product.product_name%>
+                                                    </a>
+                                                </td>
+                                                <td class="product-price"><%= product.product_new_price%></td>
+                                                <td>
+                                                    <input type="number" min="1" max="<%= product.stock_quantity%>" name="num-order"
+                                                        value="1" class="num-order">
+                                                </td>
+                                                <td class="product-quantity-price"><%= product.product_new_price%></td>
+                                                <td>
+                                                    <a href="" title="" class="del-product"><i
+                                                            class="fa fa-trash-o"></i></a>
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="7">
+                                                <div class="clearfix">
+                                                    <p id="total-price" class="fl-right">Tổng giá:
+                                                        <span>850.000đ</span>
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7">
+                                                <div class="clearfix">
+                                                    <div class="float-right">
+                                                        <a href="" class="btn btn-outline-primary" id="update-cart">Cập nhật giỏ hàng</a>
+                                                        <a href="" class="btn btn-outline-primary" id="checkout-cart">Thanh toán</a>
+                                                        <form id="checkout-cart-form" action="/thanh-toan" method="POST" style="display: none;">
+                                                            <input type="hidden" name="cart" id="checkout-cart-input">
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            <% } %>
+                            </div>
+                        </div>
+                        <div class="section" id="action-cart-wp">
+                            <div class="section-detail">
+                                <p class="title">Click vào <span>“Cập nhật giỏ hàng”</span> để cập nhật số
+                                    lượng. Nhập vào
+                                    số lượng <span>0</span> để xóa sản phẩm khỏi giỏ hàng. Nhấn vào thanh toán
+                                    để hoàn tất
+                                    mua hàng.</p>
+                                <a href="?page=home" title="" id="buy-more">Mua tiếp</a><br />
+                                <a href="" title="" id="delete-cart">Xóa giỏ hàng</a>
+                                <form id="delete-cart-form" action="/gio-hang" method="POST" style="display: none;">
+                                    <input type="hidden" name="cart" id="delete-cart-input">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="update-order-toast" style="display: none; position: fixed; top: 20px; right: 20px; z-index: 9999;">
+        <div class="toast-box">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Đã cập nhật giỏ hàng!</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Nếu đã có thông tin 'cart' trên Local storage
+            const cart = JSON.parse(localStorage.getItem('cart') || '{}');
+
+            if (cart && cart.product_list && cart.product_quantity) {
+                cart.product_list.forEach((productId, index) => {
+                    const quantity = cart.product_quantity[index] || 1;
+
+                    const cartRow = document.querySelector(`.cart-item[data-product-id="${productId}"]`);
+                    if (cartRow) {
+                        const quantityInput = cartRow.querySelector('.num-order');
+                        const priceCell = cartRow.querySelector('.product-price');
+                        const totalCell = cartRow.querySelector('.product-quantity-price');
+
+                        if (quantityInput) quantityInput.value = quantity;
+
+                        if (priceCell && totalCell) {
+                            const price = parseInt(priceCell.textContent.replace(/\D/g, '')) || 0;
+                            const total = price * quantity;
+                            totalCell.textContent = total.toLocaleString('vi-VN', {
+                                style: 'currency',
+                                currency: 'VND'
+                            });
+                        }
+                    }
+                });
+
+            // 2. Script bấm nút tăng số lượng sản phẩm
+            const quantityInputs = document.querySelectorAll('.num-order');
+
+            function updateTotalOrderPrice() {
+                let totalAll = 0;
+
+                document.querySelectorAll('.cart-item').forEach(row => {
+                    const priceCell = row.querySelector('.product-price');
+                    const quantityInput = row.querySelector('.num-order');
+                    const price = parseFloat(priceCell.textContent);
+                    const quantity = parseInt(quantityInput.value);
+
+                    if (!isNaN(price) && !isNaN(quantity)) {
+                    totalAll += price * quantity;
+                    }
+                });
+
+                const totalOrderPriceSpan = document.querySelector('#total-price span');
+                const value = totalAll.toLocaleString('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                });
+
+                totalOrderPriceSpan.textContent = totalAll.toLocaleString('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                });
+            }
+      
+            quantityInputs.forEach(input => {
+            input.addEventListener('input', () => {
+                const row = input.closest('.cart-item');
+                const priceCell = row.querySelector('.product-price');
+                const productQuantityTotalCell = row.querySelector('.product-quantity-price');
+        
+                const price = parseFloat(priceCell.textContent);
+                const quantity = parseInt(input.value);
+
+        
+                if (!isNaN(price) && !isNaN(quantity)) {
+                    const total = price * quantity;
+                    productQuantityTotalCell.textContent = total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                }
+
+                updateTotalOrderPrice();
+            });
+        });
+
+        updateTotalOrderPrice();
+
+        // 3. Script cập nhật giỏ hàng
+        const updateCartBtn = document.querySelector('#update-cart');
+
+        function showUpdateOrderToast() {
+            const toast = document.getElementById('update-order-toast');
+            toast.style.display = 'flex';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 1000); // 1 giây
+        }
+
+        updateCartBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // tránh reload trang
+
+            //   const cart = JSON.parse(localStorage.getItem('cart') || '{}');
+            const product_list = cart.product_list || [];
+            const product_quantity = [];
+
+            product_list.forEach(productId => {
+                // Tìm input số lượng của product đang duyệt
+                const input = document.querySelector(`.cart-item[data-product-id="${productId}"] .num-order`);
+                const qty = input ? parseInt(input.value) : 1;
+                product_quantity.push(qty > 0 ? qty : 1); // đảm bảo ít nhất là 1
+            });
+
+            // Ghi lại cart mới
+            const newCart = {
+                product_list: product_list,
+                product_quantity: product_quantity
+            };
+
+            localStorage.setItem('cart', JSON.stringify(newCart));
+
+            showUpdateOrderToast();
+        });
+
+        // 4. Script xoá giỏ hàng
+        document.getElementById('delete-cart').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            localStorage.removeItem('cart'); // Xóa dữ liệu cart khỏi localStorage
+
+            let form = document.getElementById('delete-cart-form');
+            let input = document.getElementById('delete-cart-input');
+            input.value = null;
+        
+            form.submit();
+
+            // alert('Giỏ hàng đã được xóa!');
+            // location.reload(); // hoặc bạn có thể dùng window.location.href = "/"; để redirect
+        });
+
+        // 5. Script thanh toán giỏ hàng
+        document.getElementById('checkout-cart').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            let form = document.getElementById('checkout-cart-form');
+            let input = document.getElementById('checkout-cart-input');
+            input.value = localStorage.getItem('cart');;
+        
+            form.submit();
+        });
+
+        }
+    });
+
+    </script>
+<%- get_layout("footer") %>

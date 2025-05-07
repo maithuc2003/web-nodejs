@@ -1,0 +1,149 @@
+<%- get_layout("header") %>
+
+  <div id="content" class="mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-3 border-right">
+        <%- get_layout("sidebar") %>
+      </div>
+      <div class="col-md-9">
+        <div class="row m-3">
+          <!-- BÊN TRÁI: Danh mục & Trạng thái -->
+          <div class="col-md-7">
+            <div class="form-inline">
+              <a href="/trang" class="btn btn-secondary mr-2" id="showAllBtn">Tất cả</a>
+              <div class="form-group mr-2">
+                <select class="form-control" id="statusFilter" name="status">
+                  <option value="">Trạng thái</option>
+                  <option value="draft">Bản nháp</option>
+                  <option value="published">Đăng</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- BÊN PHẢI: Tìm theo tên -->
+          <div class="col-md-5 text-right">
+            <form class="form-inline justify-content-end" action="/trang/search" method="GET">
+              <div class="form-group mr-2">
+                <input type="text" class="form-control" name="q" placeholder="Tìm theo tên sản phẩm">
+              </div>
+              <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div id="main-content-wp" class="cart-page">
+            <div class="section" id="info-cart-wp">
+              <div class="section-detail table-responsive">
+                <div class="d-flex justify-content-between align-items-center mb-2 px-2">
+                  <p class="mb-0" id="totalPages">
+                    Hiện: <strong><span id="pageCount">
+                        <%= pages.length %>
+                      </span></strong> / <strong><span id="pageCountAll">
+                        <%= totalResults %>
+                      </span></strong> sản phẩm
+                  </p>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Tiêu đề</th>
+                      <th>Trạng thái</th>
+                      <th>Người Tạo</th>
+                      <th>Thời gian</th>
+                      <th>Cập nhật</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% if (pages.length> 0) { %>
+                      <% pages.forEach(function(page, index){ %>
+                        <tr>
+                          <td>
+                            <%= stt_page + index +1 %>
+                          </td>
+                          <td>
+                            <ul class="list-inline">
+                              <!-- Xem chi tiết trang (nếu có route) -->
+                              <li class="list-inline-item">
+                                <a href="/trang/edit/<%= page._id %>" title="<%= page.title %>" class="name-product">
+                                  <%= page.page_title %>
+                                </a>
+                              </li>
+                              <!-- Sửa -->
+                              <li class="list-inline-item">
+                                <a href="/trang/edit/<%= page._id %>" title="Sửa" class="update-product">
+                                  <i class="fa-solid fa-pencil"></i>
+                                </a>
+                              </li>
+                              <!-- Xóa -->
+                              <li class="list-inline-item">
+                                <a href="/trang/delete/<%= page._id %>" title="Xóa" class="del-product"
+                                  onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">
+                                  <i class="fa-solid fa-trash"></i>
+                                </a>
+                              </li>
+                            </ul>
+                          </td>
+                          <td>
+                            <%= page.page_status || "Chưa rõ" %>
+                          </td>
+                          <td>
+                            <%= page.admin_id ? page.admin_id.username : "Không có admin" %>
+                          </td>
+                          <td>
+                            <%= new Date(page.createdAt).toLocaleString('vi-VN') %>
+                          </td>
+                          <td>
+                            <%= new Date(page.updatedAt).toLocaleString('vi-VN') %>
+                          </td>
+                        </tr>
+                        <% }) %>
+                          <% } else { %>
+                            <tr>
+                              <td colspan="7" class="text-center">Không có trang nào!</td>
+                            </tr>
+                            <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- Pagination mẫu -->
+          <div class="section-footer">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <nav>
+                    <ul class="pagination pagination-sm justify-content-center">
+                      <% if (currentPage> 1) { %>
+                        <li class="page-item">
+                          <a href="/trang/search?q=<%= query %>&page=<%= currentPage - 1 %>"
+                            class="page-link">&laquo;</a>
+                        </li>
+                        <% } %>
+                          <% for (let i=1; i <=totalPages; i++) { %>
+                            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                              <a href="/trang/search?q=<%= query %>&page=<%= i %>" class="page-link">
+                                <%= i %>
+                              </a>
+                            </li>
+                            <% } %>
+                              <% if (currentPage < totalPages) { %>
+                                <li class="page-item">
+                                  <a href="/trang/search?q=<%= query %>&page=<%= currentPage + 1 %>"
+                                    class="page-link">&raquo;</a>
+                                </li>
+                                <% } %>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- get_layout("footer") %>

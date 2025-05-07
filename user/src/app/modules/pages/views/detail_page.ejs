@@ -1,0 +1,39 @@
+<%- get_layout("header") %>
+
+    <div id="about-page" class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar -->
+                <aside class="col-md-3 mb-4">
+                    <%- get_layout("feature_product") %>
+                </aside>
+
+                <!-- Page Content -->
+                <main class="col-md-9">
+                    <article class="card shadow-sm p-4 bg-white">
+                        <h1 class="h3 mb-3 text-primary">
+                            <%= page.page_title %>
+                        </h1>
+                        <div class="text-muted mb-3" style="font-style: italic;">
+                            Ngày cập nhật: <%= new Date(page.updatedAt).toLocaleDateString('vi-VN') %>
+                        </div>
+                        <div class="blog-content fs-5 lh-lg">
+                            <%- page.page_content %>
+                        </div>
+                    </article>
+
+                   
+                </main>
+            </div>
+        </div>
+    </div>
+    <style>
+        .blog-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1rem auto;
+        }
+    </style>
+
+    <%- get_layout("footer") %>

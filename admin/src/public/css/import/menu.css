@@ -1,0 +1,36 @@
+.dd {
+  width: 100%;
+  /* Đảm bảo phần tử chiếm toàn bộ chiều rộng */
+  max-width: 100%;
+}
+
+.dd-list {
+  padding-left: 20px;
+  /* Thêm một ít lề trái nếu bạn muốn */
+}
+
+.dd-item {
+  list-style-type: none;
+  /* Loại bỏ dấu chấm mặc định của danh sách */
+  margin-bottom: 10px;
+  /* Thêm khoảng cách giữa các item */
+}
+
+.dd-list {
+  padding-left: 0;
+  /* Loại bỏ padding trái */
+  margin: 0;
+  /* Loại bỏ margin nếu không cần thiết */
+}
+
+.dd-item {
+  width: 100%;
+  /* Đảm bảo các item chiếm hết chiều rộng */
+  box-sizing: border-box;
+  /* Đảm bảo padding và border không làm thay đổi kích thước */
+}
+
+.dd-item div {
+  padding-top: 10px;
+  padding-bottom: 30px;
+}

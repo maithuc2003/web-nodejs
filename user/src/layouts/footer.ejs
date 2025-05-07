@@ -1,0 +1,46 @@
+<div id="footer" class="mt-5">
+  <div class="section-detail pt-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h5>Giới thiệu</h5>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <p>
+                Ghế đá – Mang lại không gian nghỉ ngơi, thư giãn cho mọi người.
+                Chuyên cung cấp các loại ghế đá sân vườn, công viên, trường học, khu dân cư,... <br>
+                Địa chỉ: 123 Đường Xanh, Quận 9, TP. Hồ Chí Minh <br>
+                Điện thoại: 0909 999 999 <br>
+                Email: lienhe@gheda.vn <br>
+                Website: www.gheda.vn
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-md-4">
+          <h5>ĐIỀU KHOẢN VÀ CHÍNH SÁCH</h5>
+          <ul class="list-group">
+            <% footer_menus.forEach(item=> { %>
+              <li class="list-group-item"><a href="<%= item.slug %>">
+                  <%= item.menu_name %>
+                </a></li>
+              <% }); %>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5>Facebook</h5>
+          <div id="fb-root"></div>
+          <script async defer crossorigin="anonymous"
+            src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v22.0"></script>
+          <div class="fb-page" data-href="https://www.facebook.com/profile.php?id=61575707600252" data-tabs=""
+            data-width="" data-height="" data-small-header="false" data-adapt-container-width="true"
+            data-hide-cover="false" data-show-facepile="true">
+            <blockquote cite="https://www.facebook.com/profile.php?id=61575707600252" class="fb-xfbml-parse-ignore"><a
+                href="https://www.facebook.com/profile.php?id=61575707600252">Ghế đá</a></blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+<%- get_layout("header") %>
+  <div id="content" class="mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-3  border-right">
+        <%- get_layout("sidebar") %>
+      </div>
+      <div class="col-md-9">
+        <h3>Thêm sản phẩm mới</h3>
+        <% if (typeof success !=="undefined" ) { %>
+          <div class="alert alert-success">
+            <%= success %>
+          </div>
+
+          <% } %>
+            <% if (typeof error !=="undefined" ) { %>
+              <div class="alert alert-danger">
+                <%= error %>
+              </div>
+              <% } %>
+                <form method="POST" action="" enctype="multipart/form-data">
+                  <div class="col-md-7">
+                    <div class="form-group mt-4">
+                      <label for="username" class="h6">Tiêu đề</label>
+                      <input type="text" class="form-control form-control-sm" name="title" id="title" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="username" class="h6">Slug (Friendly_url )</label>
+                      <input type="text" class="form-control form-control-sm" name="slug" id="slug" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="stock_quantity" class="h6">Số lượng hàng tồn kho</label>
+                      <input type="number" min="0" class="form-control form-control-sm" name="stock_quantity"
+                        id="stock_quantity" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="new_price" class="h6">Giá mới</label>
+                      <input type="number" min="0" class="form-control form-control-sm" name="new_price" id="new_price"
+                        value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="old_price" class="h6">Giá cũ</label>
+                      <input type="number" min="0" class="form-control form-control-sm" name="old_price" id="old_price"
+                        value="">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="desc">Mô tả ngắn</label>
+                      <textarea class="form-control" name="desc" id="desc"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="detail">Mô tả chi tiết</label>
+                      <textarea class="form-control" name="detail" id="detail" rows="100" cols="100"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="form-group">
+                      <label for="is_featured">Đặc điểm</label>
+                      <select class="form-control  form-control-sm" name="is_featured" id="is_featured">
+                        <option value="1">Bán chạy</option>
+                        <option value="0">Bình thường</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="status">Trạng thái</label>
+                      <select class="form-control  form-control-sm" name="status" id="status">
+                        <option value="active">Đang hoạt động</option>
+                        <option value="inactive">Không hoạt động</option>
+                        <option value="out_of_stock">Hết Hàng</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="product_cat">Danh mục sản phẩm</label>
+                      <select class="form-control form-control-sm" name="product_cat" id="product_cat" multiple>
+                        <% listProductCat.forEach(category=> { %>
+                          <option value="<%= category.id %>">
+                            <%= category.category_name %>
+                          </option>
+                          <% }) %>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="thumb_img">Hình ảnh</label>
+                      <input type="file" class="form-control-file" name="thumb_img" id="thumb_img" multiple>
+                    </div>
+                    <button type="submit" name="btn_login" class="btn btn-outline-primary btn-block">Thêm</button>
+                  </div>
+                </form>
+      </div>
+    </div>
+  </div>
+
+  <%- get_layout("footer") %>

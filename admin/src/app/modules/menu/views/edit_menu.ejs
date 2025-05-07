@@ -1,0 +1,310 @@
+<%- get_layout("header") %>
+  <div id="content" class="mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-3  border-right">
+        <%- get_layout("sidebar") %>
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-4">
+            <div id="list-menu">
+              <div class="form-group clearfix">
+                <div class="row">
+                  <div class="accordion col-md-12" id="accordion-faq">
+                    <form id="page" action="/menu/item/<%= menu._id %>" method="POST">
+                      <input type="hidden" name="menu_id" value="<%= menu._id %>" />
+                      <div class="card">
+                        <div class="card-header">
+                          <button class="" type="button" data-toggle="collapse" data-target="#collapse-1">
+                            Trang
+                          </button>
+                        </div>
+                        <div class="collapse" id="collapse-1" data-parent="#accordion-faq">
+                          <div class="p-4">
+                            <nav>
+                              <div class="nav nav-tabs" id="home-tabs">
+                                <a href="#tab-page-1" class="nav-item nav-link active" data-toggle="tab">Tất cả</a>
+                                <a href="#tab-page-2" class="nav-item nav-link" data-toggle="tab">Tìm kiếm</a>
+                              </div>
+                            </nav>
+                            <!-- #2 nội dung -->
+                            <div class="tab-content border">
+                              <div class="tab-pane show fade active" id="tab-page-1">
+                                <ul class="list-group list-group-flush">
+                                  <% if (pages.length> 0) { %>
+                                    <% pages.forEach(page=> { %>
+                                      <li class="list-group-item">
+                                        <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" name="page_id[]"
+                                            value="<%= page._id %>" id="<%= page._id %>">
+                                          <label class="custom-control-label" for="<%= page._id %>">
+                                            <%= page.page_title %>
+                                          </label>
+                                        </div>
+                                      </li>
+                                      <% }) %>
+                                        <% } else { %>
+                                          <li class="list-group-item">
+                                            <span>Không tìm thấy kết quả</span>
+                                          </li>
+                                          <% } %>
+                                </ul>
+                              </div>
+                              <div class="tab-pane show fade p-4" id="tab-page-2">
+                                <!-- <form action="" class="form-check-inline"> -->
+                                <input type="text" class="form-control">
+                                <button class="btn btn-outline-info mt-2" id="searchButtonPage">SEARCH</button>
+                                <!-- </form> -->
+                              </div>
+                            </div>
+                            <p class="error_page" style="color: red;"></p>
+                            <p class="success_page"></p>
+                            <p>Trang liên kết đến menu</p>
+                            <div class="mt-3">
+                              <span class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="all_page">
+                                <label class="custom-control-label" for="all_page">Chọn tất
+                                  cả</label>
+                              </span>
+                              <span class="form-group">
+                                <input type="hidden" name="parent_cat" id="parent_cat">
+                                <input type="submit" name="add_page" value="Thêm vào menu" id="add_page"
+                                  class="btn btn-light btn-outline form-control text-dark">
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <!-- Product -->
+                    <form id="product" action="/menu/item/<%= menu._id %>" method="POST">
+                      <input type="hidden" name="menu_id" value="<%= menu._id %>" />
+                      <div class="card">
+                        <div class="card-header">
+                          <button class="" type="button" data-toggle="collapse" data-target="#collapse-2">
+                            Danh mục sản phẩm
+                          </button>
+                        </div>
+                        <div class="collapse" id="collapse-2" data-parent="#accordion-faq">
+                          <div class="p-4">
+                            <nav>
+                              <div class="nav nav-tabs" id="home-tabs">
+                                <a href="#tab-product-1" class="nav-item nav-link active" data-toggle="tab">Tất cả</a>
+                                <a href="#tab-product-2" class="nav-item nav-link" data-toggle="tab">Tìm kiếm</a>
+                              </div>
+                            </nav>
+                            <!-- #2 nội dung -->
+                            <div class="tab-content border">
+                              <div class="tab-pane show fade active" id="tab-product-1">
+                                <ul class="list-group list-group-flush">
+                                  <% if (product_cat.length> 0) { %>
+                                    <% product_cat.forEach(product_cat=> { %>
+                                      <li class="list-group-item">
+                                        <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" name="product_cat_ids[]"
+                                            value="<%= product_cat._id %>" id="<%= product_cat._id %>">
+
+                                          <label class="custom-control-label" for="<%= product_cat._id %>">
+                                            <%= product_cat.category_name %>
+                                          </label>
+                                        </div>
+                                      </li>
+                                      <% }) %>
+                                        <% } else { %>
+                                          <li class="list-group-item">
+                                            <span>Không tìm thấy kết quả</span>
+                                          </li>
+                                          <% } %>
+                                </ul>
+                              </div>
+                              <div class="tab-pane show fade p-4" id="tab-product-2">
+                                <input type="text" class="form-control">
+                                <button class="btn btn-outline-info mt-2" id="searchButtonProduct">SEARCH</button>
+                                <!-- </form> -->
+                              </div>
+                            </div>
+                            <p class="error_product" style="color: red;"></p>
+                            <p class=" success_product"></p>
+                            <p>Trang liên kết đến menu</p>
+                            <div class="mt-3">
+                              <span class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="all_product">
+                                <label class="custom-control-label" for="all_product">Chọn
+                                  tất
+                                  cả</label>
+                              </span>
+                              <span class="form-group">
+                                <!-- <input type="hidden" name="parent_cat" id="parent_cat"> -->
+                                <input type="submit" value="Thêm vào menu" name="add_product" id="add_product"
+                                  class="btn btn-light btn-outline form-control text-dark">
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <!-- Bài viết -->
+                    <form id="posts" action="/menu/item/<%= menu._id %>" method="POST">
+                      <input type="hidden" name="menu_id" value="<%= menu._id %>" />
+                      <div class="card">
+                        <div class="card-header">
+                          <button class="" type="button" data-toggle="collapse" data-target="#collapse-3">
+                            <span>Danh mục bài viết</span>
+                          </button>
+                        </div>
+                        <div class="collapse" id="collapse-3" data-parent="#accordion-faq">
+                          <div class="p-4">
+                            <nav>
+                              <div class="nav nav-tabs" id="home-tabs">
+                                <a href="#tab-post-1" class="nav-item nav-link active" data-toggle="tab">Tất cả</a>
+                                <a href="#tab-post-2" class="nav-item nav-link" data-toggle="tab">Tìm kiếm</a>
+                              </div>
+                            </nav>
+                            <!-- #2 nội dung -->
+                            <div class="tab-content border">
+                              <div class="tab-pane show fade active" id="tab-post-1">
+                                <ul class="list-group list-group-flush">
+                                  <% if (posts.length> 0) { %>
+                                    <% posts.forEach(post=> { %>
+                                      <li class="list-group-item">
+                                        <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" name="post_id[]"
+                                            value="<%= post._id %>" id="<%= post._id %>">
+                                          <label class="custom-control-label" for="<%= post._id %>">
+                                            <%= post.category_name %>
+                                          </label>
+                                        </div>
+                                      </li>
+                                      <% }) %>
+                                        <% } else { %>
+                                          <li class="list-group-item">
+                                            <span>Không tìm thấy kết quả</span>
+                                          </li>
+                                          <% } %>
+                                </ul>
+                              </div>
+                              <div class="tab-pane show fade p-4" id="tab-post-2">
+                                <!-- <form action="" class="form-check-inline"> -->
+                                <input type="text" class="form-control">
+                                <button class="btn btn-outline-info mt-2" id="searchButtonPost">SEARCH</button>
+                                <!-- </form> -->
+                              </div>
+                            </div>
+                            <P class="error_post" style="color: red;"></p>
+                            <P class=" success_post"></P>
+                            <p>Trang liên kết đến menu</p>
+                            <div class="mt-3">
+                              <span class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="all_post">
+                                <label class="custom-control-label" for="all_post">Chọn tất
+                                  cả</label>
+                              </span>
+                              <span class="form-group">
+                                <input type="hidden" name="parent_cat" id="parent_cat">
+                                <input type="submit" value="Thêm vào menu" name="add_post" id="add_post"
+                                  class="btn btn-light btn-outline form-control text-dark">
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div id="category-menu" class="row">
+              <!-- Chọn vị trí hiển thị menu -->
+              <div class="mb-3 col-12">
+                <label class="mb-2">Chọn vị trí hiển thị menu</label>
+                <% MenuPositions.forEach(position=> { %>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="select_menu" id="<%= position._id %>"
+                      data-id="<%= position._id %>" value="<%= position.position_name %>" <% if
+                      (position._id.equals(menu.select_menu._id)) { %>
+                    checked <% } %> >
+                      <label class="form-check-label" for="menu_<%= position._id %>">
+                        <%= position.position_name %>
+                      </label>
+                  </div>
+                  <% }); %>
+              </div>
+              <!-- Nhập tên menu -->
+              <div class="mb-3 col-12">
+                <label for="menu_name">Tên menu</label>
+                <input type="text" name="menu_name" value="<%= menu.title %>" id="menu_name" class="form-control"
+                  placeholder="Nhập tên menu">
+              </div>
+              <!-- Các mục trong menu -->
+              <div class="mb-3 col-md-12">
+                <form id="menu_items_form" method="POST">
+                  <div class="dd" id="menu_items" data-menu-id="<%= menu._id %>">
+                    <ol class="dd-list">
+                      <% function renderMenuItems(items) { %>
+                        <% items.forEach(item=> { %>
+                          <li class="dd-item" data-id="<%= item._id %>">
+                            <div class="dd-handle">
+                              <%= item.menu_name %>
+                            </div>
+                            <input type="checkbox" class="delete-checkbox" data-id="<%= item._id %>">
+                            <% if (item.children && item.children.length> 0) { %>
+                              <ol class="dd-list">
+                                <%= renderMenuItems(item.children) %> <!-- Gọi lại đệ quy cho các item con -->
+                              </ol>
+                              <% } %>
+                          </li>
+                          <% }) %>
+                            <% } %>
+                              <%= renderMenuItems(menu_items) %> <!-- Gọi hàm renderMenuItems tại đây để bắt đầu -->
+                    </ol>
+                  </div>
+
+
+                  <!-- Nút xóa tất cả -->
+                  <div class="mb-3">
+                    <input type="checkbox" id="select_all"> Chọn tất cả
+                  </div>
+                    <!-- Nút xóa tất cả -->
+                    <div class="mb-3">
+                      <input type="checkbox" id="select"> Chọn từng mục
+                    </div>
+                  <button type="button" id="delete_selected" class="btn btn-danger" style="display: none;">Xóa mục đã
+                    chọn</button>
+                </form>
+              </div>
+
+
+              <!-- Nút lưu -->
+              <div class="mb-3 col-12">
+                <button type="submit" class="btn btn-primary" name="sm_add" id="btn-save-list">Lưu menu</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="user" class="h6">Người tạo</label>
+          <input type="text" class="form-control form-control-sm" name="user" id="user"
+            value="<%=  menu.admin_id.username %>" readonly>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <label for="update" class="h6">Cập nhật</label>
+              <input type="text" class="form-control form-control-sm" name="update" id="update"
+                value="<%=formatDate(menu.updatedAt)%>" readonly>
+            </div>
+            <div class="col">
+              <label for="created" class="h6">Thời gian</label>
+              <input type="text" class="form-control form-control-sm" name="created" id="created"
+                value="<%=formatDate(menu.createdAt) %>" readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- get_layout("footer") %>

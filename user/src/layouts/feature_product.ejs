@@ -1,0 +1,49 @@
+<div class="section" id="feature-product-wp">
+    <div class="section-head">
+        <h3 class="section-title">Sản phẩm bán chạy</h3>
+    </div>
+    <div class="section-detail">
+        <ul class="list-group">
+            <% if (featured_products.length> 0) { %>
+                <% featured_products.forEach(product=> { %>
+                    <li class="list-group-item clearfix p-2">
+                        <div class="featured_image">
+                            <a href="/san-pham/<%= product._id %>"
+                                class="thumb float-left mr-3">
+                                <img src="<%=BASE_URL + product.featured_image %>" class="fixed-size"
+                                    alt="<%= product.product_name %>">
+                            </a>
+                        </div>
+                        <div class="info">
+                            <a href="/san-pham/<%= product._id %>" class="product-name">
+                                <%= product.product_name %>
+                            </a>
+                            <div class="price">
+                                <span class="new">
+                                    <%= product.product_new_price.toLocaleString('vi-VN') %>đ
+                                </span>
+                                <% if (product.product_old_price) { %>
+                                    <span class="old">
+                                        <%= product.product_old_price.toLocaleString('vi-VN') %>đ
+                                    </span>
+                                    <% } %>
+                            </div>
+                    
+                            <button type="button" class="btn btn-outline-danger mb-2 btn-buy"
+                                data-product-id="<%= product._id %>">ĐẶT MUA</button>
+                        </div>
+                    </li>
+                    <% }); %>
+                        <% } else { %>
+                            <p>Không có sản phẩm nổi bật.</p>
+                            <% } %>
+        </ul>
+    </div>
+</div>
+
+<div id="success-toast" style="display: none; position: fixed; top: 20px; right: 20px; z-index: 9999;">
+    <div class="toast-box">
+      <i class="fa-solid fa-circle-check"></i>
+      <span>Đã thêm vào giỏ hàng!</span>
+    </div>
+  </div>

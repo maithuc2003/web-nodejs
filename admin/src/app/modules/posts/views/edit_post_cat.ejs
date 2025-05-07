@@ -1,0 +1,46 @@
+<%- get_layout("header") %>
+  <div id="content" class="mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-3  border-right">
+        <%- get_layout("sidebar") %>
+      </div>
+      <div class="col-md-9">
+        <h3>Thêm danh mục mới</h3>
+        <div class="col-md-7">
+          <form method="POST" action="/bai-viet/danhmuc/edit/<%= postCatData._id %>">
+            <div class="form-group mt-4">
+              <label for="username" class="h6">Tên danh mục</label>
+              <input type="text" class="form-control form-control-sm" name="title" id="title"
+                value="<%= postCatData.category_name %>">
+            </div>
+            <div class="form-group">
+              <label for="username" class="h6">Slug (Friendly_url )</label>
+              <input type="text" class="form-control form-control-sm" name="slug" id="slug"
+                value="<%= postCatData.category_slug %>">
+            </div>
+            <div class="form-group">
+              <label for="user" class="h6">Người tạo</label>
+              <input type="text" class="form-control form-control-sm" name="user" id="user"
+                value="<%=  postCatData.admin_id.username %>" readonly>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col">
+                  <label for="update" class="h6">Cập nhật</label>
+                  <input type="text" class="form-control form-control-sm" name="update" id="update"
+                    value="<%=formatDate(postCatData.updatedAt)%>" readonly>
+                </div>
+                <div class="col">
+                  <label for="created" class="h6">Thời gian</label>
+                  <input type="text" class="form-control form-control-sm" name="created" id="created"
+                    value="<%=formatDate(postCatData.createdAt) %>" readonly>
+                </div>
+              </div>
+            </div>
+            <button type="submit" name="btn_login" class="btn btn-outline-primary btn-block">Cập nhật</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- get_layout("footer") %>

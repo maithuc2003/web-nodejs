@@ -1,0 +1,73 @@
+<%- get_layout("header") %>
+  <div id="content" class="mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-3 border-right">
+        <%- get_layout("sidebar") %>
+      </div>
+      <% if (typeof success !=="undefined" ) { %>
+        <div class="alert alert-success">
+          <%= success %>
+        </div>
+        <% } %>
+          <% if (typeof error !=="undefined" ) { %>
+            <div class="alert alert-danger">
+              <%= error %>
+            </div>
+            <% } %>
+              <div class="col-md-9">
+                <h3>CẬP NHẬT TRANG</h3>
+                <div class="col-md-7">
+                  <form method="POST" action="/trang/edit/<%= page._id %>">
+                    <div class="form-group mt-4">
+                      <label for="title" class="h6">Tiêu đề</label>
+                      <input type="text" class="form-control form-control-sm" name="title" id="title"
+                        value="<%= page.page_title %>">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="slug" class="h6">Slug (Friendly_url)</label>
+                      <input type="text" class="form-control form-control-sm" name="slug" id="slug"
+                        value="<%= page.page_slug %>">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="detail">Mô tả chi tiết</label>
+                    <textarea class="form-control" id="detail" name="detail"
+                      rows="3"><%= page.page_content %></textarea>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="form-group">
+                    <label for="user" class="h6">Người tạo</label>
+                    <input type="text" class="form-control form-control-sm" name="user" id="user"
+                      value="<%=  page.admin_id.username %>" readonly>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col">
+                        <label for="update" class="h6">Cập nhật</label>
+                        <input type="text" class="form-control form-control-sm" name="update" id="update"
+                          value="<%=formatDate(page.updatedAt)%>" readonly>
+                      </div>
+                      <div class="col">
+                        <label for="created" class="h6">Thời gian</label>
+                        <input type="text" class="form-control form-control-sm" name="created" id="created"
+                          value="<%=formatDate(page.createdAt) %>" readonly>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="status">Trạng thái</label>
+                    <select class="form-control form-control-sm" id="status" name="status">
+                      <option value="draft" <%=page.page_status=="draft" ? 'selected' : '' %>>Bản nháp</option>
+                      <option value="published" <%=page.page_status=="published" ? 'selected' : '' %>>Đăng</option>
+                    </select>
+                  </div>
+                  <button type="submit" name="btn_update" class="btn btn-outline-primary btn-block">Cập nhật</button>
+                  </form>
+                </div>
+              </div>
+    </div>
+  </div>
+  <%- get_layout("footer") %>

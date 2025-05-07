@@ -1,0 +1,83 @@
+<%- get_layout("header") %>
+  <div id="content" class="mt-2 mb-2">
+    <%- get_layout("slider") %>
+      <div id="products" class="mt-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3">
+              <%- get_layout("feature_product") %>
+            </div>
+            <div class="col-md-9">
+              <%- get_layout("support") %>
+                <div class="section-detail mt-5" id="productList">
+                  <h1 class="text-center">Sản phẩm</h1>
+                  <div class="row">
+                    <% list_product.forEach((product)=> { %>
+                      <div class="col-md-4 mb-4 col-sm-6 col-12">
+                        <div class="border product">
+                          <a href="san-pham/<%= product._id %>">
+                            <img class="img-fluid w-100" style="height: 200px; object-fit: cover;"
+                              src="<%=BASE_URL + product.featured_image %>" alt="<%= product.product_name %>">
+                          </a>
+                          <div class="sub text-center text-decoration-none mt-3">
+                            <a href="san-pham/<%= product._id %>">
+                              <%= product.product_name %>
+                            </a>
+                            <div class="price mt-2 mb-2" bis_skin_checked="1">
+                              <span class="new">
+                                <%= product.product_new_price.toLocaleString("vi-VN") %>đ
+                              </span>
+                              <span class="old">
+                                <%= product.product_old_price.toLocaleString("vi-VN") %>đ
+                              </span>
+                            </div>
+                            <button type="button" class="btn btn-outline-danger mb-2 btn-buy"
+                              data-product-id="<%= product._id %>">ĐẶT MUA</button>
+                          </div>
+                        </div>
+                      </div>
+                      <% }); %>
+                  </div>
+                </div>
+                <div class="section-footer">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <nav>
+                        <ul class="pagination pagination-sm justify-content-center">
+                          <% if (currentPage> 1) { %>
+                            <li class="page-item">
+                              <a href="/trang-chu/page/<%= currentPage - 1 %>" class="page-link">&laquo;</a>
+                            </li>
+                            <% } %>
+                              <% for (let i=1; i <=totalPages; i++) { %>
+                                <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                                  <a href="/trang-chu/page/<%= i %>" class="page-link">
+                                    <%= i %>
+                                  </a>
+                                </li>
+                                <% } %>
+                                  <% if (currentPage < totalPages) { %>
+                                    <li class="page-item">
+                                      <a href="/trang-chu/page/<%= currentPage + 1 %>" class="page-link">&raquo;</a>
+                                    </li>
+                                    <% } %>
+                        </ul>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div id="success-toast" style="display: none; position: fixed; top: 20px; right: 20px; z-index: 9999;">
+    <div class="toast-box">
+      <i class="fa-solid fa-circle-check"></i>
+      <span>Đã thêm vào giỏ hàng!</span>
+    </div>
+  </div>
+
+
+  <%- get_layout("footer") %>

@@ -1,0 +1,101 @@
+<%- get_layout("header") %>
+
+    <div id="content" class="mt-2 mb-2">
+        <div class="row">
+            <div class="col-md-3  border-right">
+                <%- get_layout("sidebar") %>
+            </div>
+            <div class="col-md-8">
+                <div class="col-md-12">
+                    <div id="main-content-wp" class="cart-page">
+                        <div class="section" id="info-cart-wp">
+                            <div class="section-detail table-responsive">
+                                <div id="content" class="detail-exhibition fl-right">
+                                    <div class="section mb-3" id="info">
+                                        <div class="section-head">
+                                            <h3 class="section-title">Thông tin đơn hàng</h3>
+                                        </div>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <strong>Mã đơn hàng:</strong>
+                                                <span>WEBCAMP#1494007211</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <strong>Địa chỉ nhận hàng:</strong>
+                                                <span>Hà Nội / 01689141595</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <strong>Thông tin vận chuyển:</strong>
+                                                <span>Thanh toán tại nhà</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <form method="POST" action="" class="form-inline">
+                                                    <strong class="mr-2">Tình trạng đơn hàng:</strong>
+                                                    <select name="status" class="form-control mr-2">
+                                                        <option value="0">Chờ duyệt</option>
+                                                        <option selected value="1">Đang vận chuyển</option>
+                                                        <option value="2">Thành công</option>
+                                                    </select>
+                                                    <button type="submit" name="sm_status" class="btn btn-primary">Cập
+                                                        nhật</button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="section">
+                                        <div class="section-head mb-3">
+                                            <h4 class="section-title">Sản phẩm đơn hàng</h4>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-hover">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">STT</th>
+                                                        <th scope="col">Ảnh sản phẩm</th>
+                                                        <th scope="col">Tên sản phẩm</th>
+                                                        <th scope="col">Đơn giá</th>
+                                                        <th scope="col">Số lượng</th>
+                                                        <th scope="col">Thành tiền</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>
+                                                            <div class="thumb">
+                                                                <img src="public/images/img-product.png"
+                                                                    alt="Chân váy nữ" class="img-fluid" width="80">
+                                                            </div>
+                                                        </td>
+                                                        <td>Chân váy nữ</td>
+                                                        <td>145,000 VNĐ</td>
+                                                        <td>5</td>
+                                                        <td>725,000 VNĐ</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="section">
+                                        <div class="section-detail">
+                                            <ul class="list-unstyled">
+                                                <li class="d-flex justify-content-between py-2 border-bottom">
+                                                    <span class="font-weight-bold">Tổng số lượng:</span>
+                                                    <span>5 sản phẩm</span>
+                                                </li>
+                                                <li class="d-flex justify-content-between py-2">
+                                                    <span class="font-weight-bold">Tổng đơn hàng:</span>
+                                                    <span class="text-danger font-weight-bold">725,000 VNĐ</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- get_layout("footer") %>

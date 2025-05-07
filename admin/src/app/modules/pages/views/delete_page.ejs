@@ -1,0 +1,21 @@
+<%- get_layout("header") %>
+
+<div id="content" class="mt-2 mb-2">
+  <div class="row">
+    <div class="col-md-3 border-right">
+      <%- get_layout("sidebar") %>
+    </div>
+    <div class="col-md-9">
+      <h3>XÓA TRANG</h3>
+      <div class="alert alert-danger">
+        Bạn có chắc muốn xóa trang <strong><%= page.title %></strong> không?
+      </div>
+
+      <form method="POST" action="/trang/delete/<%= page._id %>">
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        <a href="/trang" class="btn btn-secondary">Hủy</a>
+      </form>
+    </div>
+  </div>
+</div>
+<%- get_layout("footer") %>

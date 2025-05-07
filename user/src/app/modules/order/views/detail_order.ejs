@@ -1,0 +1,114 @@
+<%- get_layout("header") %>
+
+<div id="content" class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+
+            <h3 class="mb-4 text-center">Thông tin đơn hàng</h3>
+
+            <% const statusMap = {
+                pending: "Chờ duyệt",
+                processing: "Đang vận chuyển",
+                shipped: "Đã gửi hàng",
+                delivered: "Thành công",
+                cancled: "Đã huỷ"
+            }; %>
+            <div class="row mb-4">
+                <div class="col-12">
+                    <ul class="list-unstyled d-flex justify-content-between">
+                        <li class="<%= (order.status === 'pending' || order.status === 'processing' || order.status === 'shipped'  || order.status === 'delivered') ? 'text-success' : 'text-muted' %> text-center">
+                            <i class="fas fa-box-open fa-2x"></i>
+                            <p><%= statusMap.pending %></p>
+                        </li>
+                        <li class="<%= (order.status === 'processing' || order.status === 'shipped' || order.status === 'delivered') ? 'text-success' : 'text-muted' %> text-center">
+                            <i class="fas fa-truck fa-2x"></i>
+                            <p><%= statusMap.processing %></p>
+                        </li>
+                        <li class="<%= (order.status === 'shipped' || order.status === 'delivered') ? 'text-success' : 'text-muted' %> text-center">
+                            <i class="fas fa-check-circle fa-2x"></i>
+                            <p><%= statusMap.shipped %></p>
+                        </li>
+                        <li class="<%= (order.status === 'delivered') ? 'text-success' : 'text-muted' %> text-center">
+                            <i class="fas fa-clipboard-check fa-2x"></i>
+                            <p><%= statusMap.delivered %></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <ul class="list-group mb-4">
+                <li class="list-group-item">
+                    <strong>Mã đơn hàng:</strong> <%= order.order_id %>
+                </li>
+                <li class="list-group-item">
+                    <strong>Người nhận:</strong> <%= order.fullname %>
+                </li>
+                <li class="list-group-item">
+                    <strong>Địa chỉ nhận hàng:</strong> <%= order.shipping_address %> / <%= order.phone %>
+                </li>
+                <li class="list-group-item">
+                    <strong>Phương thức thanh toán:</strong>
+                    <%= order.payment_method === "COD" ? "Thanh toán tại nhà" : "Thanh toán trực tuyến" %>
+                </li>
+                <li class="list-group-item">
+                    <strong>Trạng thái đơn hàng:</strong>
+                    <span class="badge badge-info"><%= statusMap[order.status] || order.status %></span>
+                </li>
+            </ul>
+
+            <h5 class="mb-3">Sản phẩm trong đơn</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>STT</th>
+                            <th>Ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Đơn giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% products.forEach((product, index) => { %>
+                            <tr>
+                                <td><%= index + 1 %></td>
+                                <td>
+                                    <img src="<%= BASE_URL + product.product_images[0] %>" alt="<%= product.product_name %>" width="70">
+                                </td>
+                                <td><%= product.product_name %></td>
+                                <td><%= product.product_new_price.toLocaleString('vi-VN') %> đ</td>
+                                <td><%= order.product_quantity[index] %></td>
+                                <td><%= (product.product_new_price * order.product_quantity[index]).toLocaleString('vi-VN') %> đ</td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+
+            <ul class="list-group mt-4 mb-4">
+                <li class="list-group-item d-flex justify-content-between">
+                    <strong>Tổng số lượng:</strong>
+                    <span><%= order.product_quantity.reduce((sum, qty) => sum + qty, 0) %> sản phẩm</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <strong>Tổng đơn hàng:</strong>
+                    <span class="text-danger font-weight-bold"><%= order.total_amount.toLocaleString('vi-VN') %> đ</span>
+                </li>
+            </ul>
+
+            <% if (order.status !== 'cancled' && order.status !== 'delivered') { %>
+                <form action="/don-hang/huy-don/<%= order._id %>" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng không?');">
+                    <button type="submit" class="btn btn-danger btn-block">Hủy đơn hàng</button>
+                </form>
+            <% } else { %>
+                <div class="alert alert-secondary text-center">
+                    Đơn hàng đã <strong><%= statusMap[order.status] %></strong>, không thể hủy.
+                </div>
+            <% } %>
+
+        </div>
+    </div>
+</div>
+
+<%- get_layout("footer") %>

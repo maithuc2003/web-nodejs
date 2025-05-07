@@ -1,0 +1,196 @@
+<%- get_layout("header") %>
+  <div id="content" class="mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-3  border-right">
+        <%- get_layout("sidebar") %>
+      </div>
+      <div class="col-md-9">
+        <div class="row m-3">
+          <!-- BÊN TRÁI: Danh mục & Trạng thái -->
+          <div class="col-md-7">
+            <div class="form-inline">
+              <a href="/bai-viet" class="btn btn-secondary mr-2" id="showAllBtn">Tất cả</a>
+              <div class="form-group mr-2">
+                <select class="form-control" id="categoryFilterPost" name="category">
+                  <option value="">Danh mục</option>
+                  <% listPostCat.forEach(category=> { %>
+                    <option value="<%= category.id %>">
+                      <%= category.category_name %>
+                    </option>
+                    <% }) %>
+                </select>
+              </div>
+              <div class="form-group mr-2">
+                <select class="form-control" id="statusFilterPost" name="status">
+                  <option value="">Trạng thái</option>
+                  <option value="draft">Bản nháp</option>
+                  <option value="published">Đã Đăng</option>
+                  <option value="pending">Chờ duyệt</option>
+                  <option value="archived">Đã lưu trữ</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- BÊN PHẢI: Tìm theo tên -->
+          <div class="col-md-5 text-right">
+            <form class="form-inline justify-content-end" action="/bai-viet/search" method="GET">
+              <div class="form-group mr-2">
+                <input type="text" class="form-control" name="q" placeholder="Tìm theo tên sản phẩm">
+              </div>
+              <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div id="main-content-wp" class="cart-page">
+            <div class="section" id="info-cart-wp">
+              <div class="section-detail table-responsive">
+                <div class="d-flex justify-content-between align-items-center mb-2 px-2">
+                  <p class="mb-0" id="totalPosts">
+                    Hiện: <strong><span id="pageCount">
+                        <%= posts.length %>
+                      </span></strong> / <strong><span id="pageCountAll">
+                        <%= totalPosts %>
+                      </span></strong> sản phẩm
+                  </p>
+                </div>
+                <% if (posts && posts.length> 0) {%>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Hình ảnh</th>
+                        <th>Tiêu đề</th>
+                        <th>Danh mục</th>
+                        <th>Trạng thái</th>
+                        <th>Người Tạo</th>
+                        <th>Thời gian tạo</th>
+                        <th>Cập nhật</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% posts.forEach((post, index)=> { %>
+                        <tr>
+                          <td>
+                            <%= stt_post + index +1 %>
+                          </td>
+                          <td>
+                            <a href="/bai-viet/edit/<%= post._id%>"">
+                              <img src="<%= BASE_URL +  post.post_image %>" width="100" height="auto">
+                            </a>
+                          </td>
+                          <td>
+                            <ul class="list-inline">
+                              <li class="list-inline-item">
+                                <a href="/bai-viet/edit/<%= post._id%>"" title="" class="title-post">
+                                  <%= post.post_title.length> 10 ? post.post_title.substring(0, 20) + "..." :
+                                    post.post_title%>
+                                </a>
+                              </li>
+                              <li class="list-inline-item">
+                                <a href="/bai-viet/edit/<%= post._id%>" title="" class="update-product">
+                                  <!-- <a href="/bai-viet/<%= post._id%>/edit" title="" class="update-product"> -->
+                                  <!-- <a href="/hehe" title="" class="update-product"> -->
+                                  <i class="fa-solid fa-pencil"></i>
+                                </a>
+                              </li>
+                              <li class="list-inline-item">
+                                <button type="button" class="del-product" data-toggle="modal"
+                                  data-target="#deleteWarningModal-<%= post._id %>">
+                                  <i class="fa-solid fa-trash"></i>
+                                </button>
+                              </li>
+                            </ul>
+                          </td>
+                          <td>
+                            <% if (post.category_id && post.category_id.length) { %>
+                              <%= post.category_id.map(cat => cat.category_name).join(", ") %>
+                            <% } else { %>
+                              Không có danh mục
+                            <% } %>
+                          </td>
+                          <td>
+                            <%= post.post_status%>
+                          </td>
+                          <td>
+                            <%= post.admin_id ? post.admin_id.username : "Không có admin" %>
+                          </td>
+                          <td>
+                            <%= new Date(post.createdAt).toLocaleString('vi-VN') %>
+                          </td>
+                          <td>
+                            <%= new Date(post.updatedAt).toLocaleString('vi-VN') %>
+                          </td>
+                        </tr>
+
+                        <div class="modal" id="deleteWarningModal-<%= post._id %>" tabindex="-1" role="dialog"
+                          aria-labelledby="deleteWarningModal" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Xoá bài viết</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                Bạn có chắc chắn muốn xoá bài viết này
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                                <form method="POST" action="/bai-viet/<%= post._id %>?_method=DELETE">
+                                  <button type="submit" class="btn btn-danger">Xoá ngay</button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <% }) %>
+
+                          <% } else { %>
+                            <h5>
+                              Chưa có bài viết nào.
+                              <a href="/bai-viet/add">Tạo bài viết mới</a>
+                            </h5>
+                            <% } %>
+
+                    </tbody>
+                  </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <nav id="paginationAjax">
+                  <ul class="pagination pagination-sm justify-content-center">
+                    <% if (currentPage> 1) { %>
+                      <li class="page-item">
+                        <a href="/bai-viet/page/<%= currentPage - 1 %>" class="page-link">&laquo;</a>
+                      </li>
+                      <% } %>
+                        <% for (let i=1; i <=totalPages; i++) { %>
+                          <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                            <a href="/bai-viet/page/<%= i %>" class="page-link">
+                              <%= i %>
+                            </a>
+                          </li>
+                          <% } %>
+                            <% if (currentPage < totalPages) { %>
+                              <li class="page-item">
+                                <a href="/bai-viet/page/<%= currentPage + 1 %>" class="page-link">&raquo;</a>
+                              </li>
+                              <% } %>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- get_layout("footer")%>

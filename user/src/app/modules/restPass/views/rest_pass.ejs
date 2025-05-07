@@ -1,0 +1,33 @@
+<%- get_layout("header") %>
+  <div id="content" class="mt-2 mb-2">
+    <div id="wp-form-login" class="mt-5">
+      <div class="container">
+        <div class="row justify-content-md-center">
+          <div class="col-md-7">
+            <h1 class="text-sm-center h2">Khôi phục mật khẩu</h1>
+            <% if (typeof message !=='undefined' ) { %>
+              <div class="alert alert-info text-center mt-3">
+                <%= message %>
+              </div>
+              <% } %>
+                <form method="POST" action="/quen-mat-khau">
+                  <div class="form-group mt-4">
+                    <label for="email" class="h6">Vui lòng nhập Email</label>
+                    <input type="email" class="form-control form-control-sm" name="email" id="email"
+                      placeholder="Email">
+                  </div>
+                  <button type="submit" name="btn_login" class="btn btn-outline-primary btn-block">Lấy Lại Mật
+                    Khẩu</button>
+                </form>
+          </div>
+          <div class="col-md-12 text-sm-center mt-4">
+            <span class="d-block"> Bạn chưa có tài khoản<a id="reg" href="/dang-ky"> Đăng ký</a>
+              ngay</span>
+            <a class="" href="dang-nhap" id="rest">Đăng nhập</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- get_layout("footer") %>

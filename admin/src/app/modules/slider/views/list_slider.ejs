@@ -1,0 +1,121 @@
+<%- get_layout("header") %>
+
+  <div id="content" class="mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-3 border-right">
+        <%- get_layout("sidebar") %>
+      </div>
+      <div class="col-md-8">
+        <div class="col-md-12">
+          <div id="main-content-wp" class="cart-slider">
+            <div class="section" id="info-cart-wp">
+              <div class="section-detail table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Hình ảnh</th>
+                      <th>Tiêu đề</th>
+                      <th>Trạng thái</th>
+                      <th>Người Tạo</th>
+                      <th>Thời gian</th>
+                      <th>Cập nhật</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% if (sliders.length> 0) { %>
+                      <% sliders.forEach(function(slider, index){ %>
+                        <tr>
+                          <td>
+                            <%= stt_slider + index +1 %>
+                          </td>
+                          <td>
+                            <a href="<%= slider.slider_slug %>">
+                              <img src="<%= BASE_URL +  slider.slider_image %>" width="100" height="auto">
+                            </a>
+                          </td>
+                          <td>
+                            <ul class="list-inline">
+                              <!-- Xem chi tiết slider (nếu có route) -->
+                              <li class="list-inline-item">
+                                <a href="/slider/edit/<%= slider._id %>" title="<%= slider.title %>"
+                                  class="name-product">
+                                  <%= slider.slider_title %>
+                                </a>
+                              </li>
+                              <!-- Sửa -->
+                              <li class="list-inline-item">
+                                <a href="/slider/edit/<%= slider._id %>" title="Sửa" class="update-product">
+                                  <i class="fa-solid fa-pencil"></i>
+                                </a>
+                              </li>
+                              <!-- Xóa -->
+                              <li class="list-inline-item">
+                                <a href="/slider/delete/<%= slider._id %>" title="Xóa" class="del-product"
+                                  onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">
+                                  <i class="fa-solid fa-trash"></i>
+                                </a>
+                              </li>
+                            </ul>
+                          </td>
+                          <td>
+                            <%= slider.slider_status || "Chưa rõ" %>
+                          </td>
+                          <td>
+                            <%= slider.admin_id ? slider.admin_id.username : "Không có admin" %>
+                          </td>
+                          <td>
+                            <%= new Date(slider.createdAt).toLocaleString('vi-VN') %>
+                          </td>
+                          <td>
+                            <%= new Date(slider.updatedAt).toLocaleString('vi-VN') %>
+                          </td>
+                        </tr>
+                        <% }) %>
+                          <% } else { %>
+                            <tr>
+                              <td colspan="7" class="text-center">Không có slider nào!</td>
+                            </tr>
+                            <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- Pagination mẫu -->
+          <div class="section-footer">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <nav>
+                    <ul class="pagination pagination-sm justify-content-center">
+                      <% if (currentPage> 1) { %>
+                        <li class="page-item">
+                          <a href="/slider/page/<%= currentPage - 1 %>" class="page-link">&laquo;</a>
+                        </li>
+                        <% } %>
+                          <% for (let i=1; i <=totalPages; i++) { %>
+                            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                              <a href="/slider/page/<%= i %>" class="page-link">
+                                <%= i %>
+                              </a>
+                            </li>
+                            <% } %>
+                              <% if (currentPage < totalPages) { %>
+                                <li class="page-item">
+                                  <a href="/slider/page/<%= currentPage + 1 %>" class="page-link">&raquo;</a>
+                                </li>
+                                <% } %>
+                    </ul>
+                  </nav>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- get_layout("footer") %>

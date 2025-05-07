@@ -1,0 +1,78 @@
+<%- get_layout("header") %>
+  <div id="content" class="mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-3  border-right">
+        <%- get_layout("sidebar") %>
+      </div>
+      <div class="col-md-8">
+        <div>
+          <a href="sanpham/danhmuc/add" type="button" class="btn btn-outline-primary mb-2">Thêm danh mục mới </a>
+        </div>
+        <div class="col-md-12">
+          <div id="main-content-wp" class="cart-page">
+            <div class="section" id="info-cart-wp">
+              <div class="section-detail table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Tên danh mục</th>
+                      <th>Người Tạo</th>
+                      <th>Thời gian tạo</th>
+                      <th>Cập nhật</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% if (product_cat && product_cat.length> 0) {%>
+                      <% product_cat.forEach((cat, index)=> { %>
+                        <tr>
+                          <td>
+                            <%= index +1 %>
+                          </td>
+                          <td>
+                            <ul class="list-inline">
+                              <li class="list-inline-item">
+                                <a href="/sanpham/danhmuc/edit/<%= cat._id %>" class="name-product">
+                                  <%= cat.category_name %>
+                                </a>
+                              </li>
+                              <li class="list-inline-item">
+                                <a data-id="<%= cat._id %>" href="/sanpham/danhmuc/edit/<%= cat._id %>"
+                                  class="update-product">
+                                  <i class="fa-solid fa-pencil"></i>
+                                </a>
+                              </li>
+                              <li class="list-inline-item">
+                                <a data-id="<%= cat._id %>" href="/sanpham/danhmuc/delete/<%= cat._id %>"
+                                  class="del-product">
+                                  <i class="fa-solid fa-trash"></i>
+                                </a>
+                              </li>
+                            </ul>
+                          </td>
+                          <td>
+                            <%= cat.admin_id ? cat.admin_id.username : "Không có admin" %>
+                          </td>
+                          <td>
+                            <%= new Date(cat.createdAt).toLocaleString('vi-VN') %>
+                          </td>
+                          <td>
+                            <%= new Date(cat.updatedAt).toLocaleString('vi-VN') %>
+                          </td>
+                        </tr>
+                        <% }) %>
+                          <% } else { %>
+                            <tr>
+                              <td colspan="7" class="text-center">Không có danh mục nào</td>
+                            </tr>
+                            <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- get_layout("footer") %>

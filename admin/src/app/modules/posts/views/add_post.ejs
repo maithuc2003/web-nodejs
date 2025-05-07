@@ -1,0 +1,61 @@
+<%- get_layout("header") %>
+  <div id="content" class="mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-3  border-right">
+        <%- get_layout("sidebar") %>
+      </div>
+      <div class="col-md-9">
+        <h3>THÊM BÀI VIẾT</h3>
+        <form method="POST" action="/bai-viet/create" enctype="multipart/form-data">
+          <div class="col-md-7">
+            <div class="form-group mt-4">
+              <label for="title" class="h6">Tiêu đề</label>
+              <input type="text" class="form-control form-control-sm" name="post_title" id="title" value="">
+            </div>
+            <div class="form-group mt-4">
+              <label for="post_slug" class="h6">Slug (Friendly_url)</label>
+              <input type="text" class="form-control form-control-sm" name="post_slug" id="slug" value="">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="post_excerpt">Mô tả ngắn</label>
+              <textarea class="form-control" name="post_excerpt" id="desc" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="post_content">Nội dung</label>
+              <textarea class="form-control" name="post_content" id="detail" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="col-md-7">
+            <div class="form-group">
+              <label for="post_status">Trạng thái</label>
+              <select class="form-control  form-control-sm" name="post_status" id="status">
+                <option value="draft">Bản nháp</option>
+                <option value="published">Đăng</option>
+                <option value="pending">Chờ duyệt</option>
+                <option value="archived">Đã lưu trữ</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="post_cat">Danh mục bài viết</label>
+              <select class="form-control form-control-sm" name="post_cat" id="post_cat" multiple>
+                <% listPostCat.forEach(category=> { %>
+                  <option value="<%= category.id %>">
+                    <%= category.category_name %>
+                  </option>
+                  <% }) %>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="thumb_img">Hình ảnh</label>
+              <input type="file" class="form-control-file" name="thumb_img" id="thumb_img">
+            </div>
+            <button type="submit" name="btn_login" class="btn btn-outline-primary btn-block">Thêm</button>
+          </div>
+      </div>
+      </form>
+    </div>
+  </div>
+  </div>
+  <%- get_layout("footer") %>

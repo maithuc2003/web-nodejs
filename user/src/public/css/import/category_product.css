@@ -1,0 +1,16 @@
+
+#product_category .info .price .new {
+    color: red;
+    max-height: 100%;
+    margin-bottom: 2px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 14px;
+}
+#product_category  .info .price .old {
+    color: #999;
+    text-decoration: line-through;
+    font-size: 14px;
+}
+.info .product-name,.buy-now {text-decoration: none; font-weight: bold;}
+.info .buy-now {color: red;}

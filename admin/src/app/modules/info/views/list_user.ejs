@@ -1,0 +1,51 @@
+<%- get_layout("header") %>
+    <div id="content" class="mt-2 mb-2">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <%- get_layout("sidebar") %>
+            </div>
+            <div class="col-md-9">
+                <h3>Danh sách user</h3>
+                <table class="table border table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>username</th>
+                            <th>Email</th>
+                            <th>Thời gian cập nhật</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach((user, index) => { %>
+                            <tr>
+                                <td><%= user._id%></td>
+                                <td>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <%= user.username%>
+                                        </li>
+                                        <!-- <li class="list-inline-item">
+                                            <a href="#" class="" data-target="#user-info-<%= user._id%>" data-toggle="modal">
+                                                <i class="fa-solid fa-pencil"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </li> -->
+                                    </ul>
+                                </td>
+                                <td><%= user.email%></td>
+                                <td>
+                                    <%= new Date(user.updatedAt).toLocaleString('vi-VN') %>
+                                </td>
+                            </tr>
+
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<%- get_layout("footer") %>

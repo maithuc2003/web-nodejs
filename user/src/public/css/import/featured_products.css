@@ -1,0 +1,30 @@
+/* === CĂN CHỈNH HÌNH ẢNH SẢN PHẨM === */
+.fixed-size {
+    width: 75px;
+    height: 75px; /* Giữ kích thước ảnh cố định */
+    object-fit: cover; /* Tránh bị méo ảnh */
+}
+
+/* === DANH SÁCH SẢN PHẨM === */
+
+#feature-product-wp .section-detail ul li {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+/* === CĂN CHỈNH NỘI DUNG SẢN PHẨM === */
+
+/* === ĐỊNH DẠNG CHỮ === */
+#feature-product-wp .section-detail ul li a, 
+#feature-product-wp .section-detail ul li span{
+    font-size: 13px;
+    max-width: 100px; /* Giữ kích thước chữ gọn gàng */
+}
+#feature-product-wp .section-detail .product-name {
+    display: block;       /* Giúp đảm bảo áp dụng thuộc tính */
+    font-size: 13px;
+    max-width: 150px;       /* Điều chỉnh theo giao diện mong muốn */
+    white-space: nowrap;  /* Không cho chữ xuống dòng */
+    overflow: hidden;     /* Ẩn phần chữ vượt quá */
+    text-overflow: ellipsis; /* Hiển thị dấu "..." khi chữ bị cắt */
+}

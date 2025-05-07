@@ -1,0 +1,127 @@
+<%- get_layout("header", {user: user })%>
+    <div id="content" class="mt-2 mb-2">
+        <div id="wp-form-login" class="m-5">
+            <h1 class="text-sm-center h2">Thay đổi mật khẩu</h1>
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col-8">
+                        <form method="POST" action="/doi-mat-khau/change-password" id="changePasswordForm">
+                            <div class="form-group mt-4 ">
+                                <label for="email" class="h6">Email</label>
+                                <input type="email" class="form-control rounded" name="email" id="email"
+                                    placeholder="Email" value="">
+                                <span class="error-message text-danger"></span>
+
+                                <% if (typeof error !=="undefined" && error) { %>
+                                    <span class="text-danger" id="register-failed">
+                                        <%= error%>
+                                    </span>
+                                    <% } %>
+                            </div>
+                            <div class="form-group mt-4">
+                                <label for="oldPassword" class="h6">Mật khẩu hiện tại</label>
+                                <input type="password" class="form-control rounded" name="oldPassword" id="oldPassword"
+                                    placeholder="Mật khẩu">
+                                <span class="error-message text-danger"></span>
+
+                                <% if (typeof password_error !=="undefined" && error) { %>
+                                    <span class="text-danger" id="register-failed">
+                                        <%= password_error%>
+                                    </span>
+                                    <% } %>
+                            </div>
+                            <div class="form-group mt-4">
+                                <label for="newPassword" class="h6">Mật khẩu mới</label>
+                                <input type="password" class="form-control rounded" name="newPassword" id="newPassword"
+                                    placeholder="Mật khẩu">
+                                <span class="error-message text-danger"></span>
+
+                                <span class="error-message text-danger"></span>
+                            </div>
+                            <button type="submit" name="btn_change_pass" class="btn btn-outline-primary btn-block">
+                                Thay đổi
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-12 text-sm-center mt-4">
+                        <!-- <span class="d-block">Bạn đã có tài khoản<a id="reg" href="/dang-nhap"> Đăng nhập </a> -->
+                            <!-- ngay</span> -->
+                        <a class="" href="quen-mat-khau" id="rest">Quên mật khẩu</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            function showError(id, message) {
+                let errorElement = document.getElementById(id).nextElementSibling;
+                errorElement.innerText = message;
+            }
+
+            function clearError(id) {
+                let errorElement = document.getElementById(id).nextElementSibling;
+                const registerFailedElement = document.getElementById("register-failed");
+                if (registerFailedElement) {
+                    registerFailedElement.style.display = "none";
+                }
+                errorElement.innerText = "";
+            }
+
+            function validateInput(event) {
+                let id = event.target.id;
+                let value = event.target.value.trim();
+                let isValid = true;
+
+                if (id === "email") {
+                    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    if (!emailRegex.test(value)) {
+                        showError(id, "Email không hợp lệ!");
+                        isValid = false;
+                    } else clearError(id);
+                }
+
+                if (id === "oldPassword") {
+                    let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+                    if (!passwordRegex.test(value)) {
+                        showError(id, "Mật khẩu ít nhất 6 ký tự, gồm chữ cái và số!");
+                        isValid = false;
+                    } else clearError(id);
+                }
+
+                if (id === "newPassword") {
+                    let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+                    if (!passwordRegex.test(value)) {
+                        showError(id, "Mật khẩu ít nhất 6 ký tự, gồm chữ cái và số!");
+                        isValid = false;
+                    } else clearError(id);
+                }
+
+                return isValid;
+            }
+
+            // Thêm sự kiện 'blur' để kiểm tra ngay khi rời khỏi ô nhập
+            let inputs = document.querySelectorAll("#changePasswordForm input");
+            inputs.forEach(input => {
+                input.addEventListener("blur", validateInput);
+            });
+
+            // Xử lý submit form
+            document.getElementById("changePasswordForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+                let isValid = true;
+
+                inputs.forEach(input => {
+                    if (!validateInput({ target: input })) {
+                        isValid = false;
+                    }
+                });
+
+                if (isValid) {
+                    this.submit();
+                }
+            });
+        });
+    </script>
+    <%- get_layout("footer") %>

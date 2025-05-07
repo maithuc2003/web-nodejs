@@ -1,0 +1,122 @@
+<%- get_layout("header") %>
+    <div id="content" class="mt-2 mb-2">
+        <div id="products" class="mt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <%- get_layout("feature_product") %>
+                    </div>
+                    <div class="col-md-9">
+                        <div id="product-detail">
+                            <div id="main-content-wp" class="clearfix detail-product-page">
+                                <div class="wp-inner">
+                                    <div class="main-content fl-right">
+                                        <div class="section" id="detail-product-wp">
+                                            <div class="media">
+                                                <img class="thumb border mr-3 mb-3"
+                                                    src="<%=  BASE_URL + product.featured_image %>"
+                                                    alt="<%= product.product_name %>">
+                                                <div class="media-body">
+                                                    <h3 class="product-name">
+                                                        <%= product.product_name %>
+                                                    </h3>
+                                                    <div class="price m-2">
+                                                        <span class="new">
+                                                            <%= product.product_new_price.toLocaleString() %>₫
+                                                        </span>
+                                                        <span class="old">
+                                                            <%= product.product_old_price.toLocaleString() %>₫
+                                                        </span>
+                                                    </div>
+                                                    <div class="short-des">
+                                                        <%- product.product_desc %>
+                                                    </div>
+
+                                                    <div class="num-order-wp">
+                                                        <!-- <input type="number" style="width: 50px; height: 30px;"
+                                                            name="num-order" value="1" id="num-order"> -->
+                                                        <button type="button"
+                                                            class="btn btn-primary btn-sm mb-2 btn-buy"
+                                                            data-product-id="<%= product._id %>">Thêm vào giỏ
+                                                            hàng</button>
+                                                        <!-- <button class="btn btn-primary">Thêm vào giỏ hàng</button> -->
+                                                    </div>
+                                                    <div class="section mt-2" id="category-info">
+                                                        <p>Thuộc danh mục:
+                                                            <% categories.forEach(function(cat, index) { %>
+                                                                <strong><%= cat.category_name %></strong><%= index < categories.length - 1 ? ', ' : '' %>
+                                                            <% }); %>
+                                                        </p>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="section" id="post-product-wp">
+                                            <div class="section-head">
+                                                <h3 class="section-title">Mô tả sản phẩm</h3>
+                                            </div>
+                                            <div class="section-detail border p-2">
+                                                <%- product.product_details %>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <% if (relatedProducts && relatedProducts.length> 0) { %>
+                        <div class="col-md-12 mt-3">
+                            <div class="section" id="same-category-wp">
+                                <div class="section-head">
+                                    <h3 class="section-title">Cùng chuyên mục</h3>
+                                </div>
+                            </div>
+                            <div id="product_category">
+                                <div class="owl-carousel owl-theme">
+                                    <% relatedProducts.forEach(item=> { %>
+                                        <div class="item border">
+                                            <div class="product p-1 py-2">
+                                                <a href="/san-pham/<%= item._id %>">
+                                                    <img class="img-fluid" style="height: 154px;" src="<%= BASE_URL + item.featured_image %>"
+                                                        alt="<%= item.product_name %>">
+                                                </a>
+                                                <div class="info text-center">
+                                                    <a href="/san-pham/<%= item._id %>" class="product-name">
+                                                        <%= item.product_name %>
+                                                    </a>
+                                                    <div class="price">
+                                                        <span class="new">
+                                                            <%= item.product_new_price.toLocaleString() %>đ
+                                                        </span>
+                                                        <span class="old">
+                                                            <%= item.product_old_price.toLocaleString() %>đ
+                                                        </span>
+                                                    </div>
+                                                    <button type="button"
+                                                        class="btn btn-outline-danger btn-sm mb-2 btn-buy"
+                                                        data-product-id="<%= item._id %>">ĐẶT MUA</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% }) %>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Toast Thông báo -->
+    <div id="success-toast" style="display: none; position: fixed; top: 20px; right: 20px; z-index: 9999;">
+        <div class="toast-box bg-light border shadow rounded px-3 py-2">
+            <i class="fa-solid fa-circle-check text-success me-2"></i>
+            <span>Đã thêm vào giỏ hàng!</span>
+        </div>
+    </div>
+    <%- get_layout("footer") %>

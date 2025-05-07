@@ -1,0 +1,40 @@
+<%- get_layout("header") %>
+  <div id="content" class="mt-2 mb-2">
+    <div class="row">
+      <div class="col-md-3  border-right">
+        <%- get_layout("sidebar") %>
+      </div>
+      <div class="col-md-9">
+        <h3>THÊM TRANG</h3>
+        <div class="col-md-7">
+          <form method="POST" action="/trang/add" enctype="multipart/form-data">
+            <div class="form-group mt-4">
+              <label for="title" class="h6">Tiêu đề</label>
+              <input type="text" class="form-control form-control-sm" name="title" id="title" value="">
+            </div>
+            <div class="form-group">
+              <label for="slug" class="h6">Slug (Friendly_url)</label>
+              <input type="text" class="form-control form-control-sm" name="slug" id="slug" value="">
+            </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="detail">Mô tả</label>
+            <textarea class="form-control" id="detail" name="detail" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="form-group">
+            <label for="status">Trạng thái</label>
+            <select class="form-control  form-control-sm" id="status" name="status">
+              <option value="draft">Bản nháp</option>
+              <option value="published">Đăng</option>
+            </select>
+          </div>
+          <button type="submit" name="btn_login" class="btn btn-outline-primary btn-block">Thêm</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- get_layout("footer") %>

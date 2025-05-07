@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <title>Ghế đá</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/">
+  <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="css/bootstrap/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+  <link href="css/fontawesome/css/all.min.css" rel="stylesheet" type="text/css" />
+
+  <!-- Owl Carousel CSS -->
+  <link rel="stylesheet" href="css/carousel/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/carousel/owl.theme.default.min.css">
+
+
+  <link href="reset.css" rel="stylesheet" type="text/css" />
+  <link href="style.css" rel="stylesheet" type="text/css" />
+
+  <script src="js/jquery-3.7.1.min.js" type="text/javascript"></script>
+  <script src="js/carousel/owl.carousel.min.js" type="text/javascript"></script>
+
+  <script src="js/popper.min.js" type="text/javascript"></script>
+  <script src="js/bootstrap/bootstrap.min.js" type="text/javascript"></script>
+  <script src="js/main.js" type="text/javascript"></script>
+  <script src="js/app.js" type="text/javascript"></script>
+
+
+</head>
+
+<body>
+  <div id="wrapper">
+    <div id="header">
+      <div id="head-top" class="clearfix">
+        <div class="container">
+          <a href="#"><i class="fa-solid fa-envelope"></i>
+            <span>example@gmail.com</span></a>
+          <a href="#"><i class="fa-solid fa-phone"></i></i></i><span>0903112713</span></a>
+        </div>
+        <div id="head-body" class="clearfix">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-2">
+                <div id="logo">
+                  <a href="trang-chu"><img src="images/logo.png" alt=""><span>Ghế đá</span></a>
+                </div>
+              </div>
+              <div class="col-md-6 mt-4">
+                <div id="search-wp" class="position-relative">
+                  <form method="GET" class="form-inline" action="/search" id="searchForm" autocomplete="off">
+                    <input type="text" name="q" class="form-control w-75" id="searchInput"
+                      placeholder="Nhập từ khóa tìm kiếm tại đây!">
+                    <button type="submit" class="btn btn-primary ml-2">
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </form>
+                  <!-- Gợi ý tìm kiếm -->
+                  <div class="dropdown-menu shadow w-75 show" id="dropdown-search">
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="col-md-4 mt-4">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                  <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto d-flex justify-content-end align-items-center gap-3">
+                      <!-- Giỏ hàng -->
+                      <li class="nav-item">
+                        <a href="/gio-hang" id="cart-link" class="nav-link text-white d-flex align-items-center">
+                          <i class="fa-solid fa-cart-shopping mr-2"></i>
+                          <span>Giỏ hàng |</span>
+                        </a>
+                        <form id="cart-form" action="/gio-hang" method="POST" style="display: none;">
+                          <input type="hidden" name="cart" id="cart-input">
+                        </form>
+                      </li>
+                      <!-- User dropdown/login -->
+                      <li class="nav-item dropdown">
+                        <% if (user) { %>
+                          <a class="nav-link dropdown-toggle text-white d-flex align-items-center" href="#"
+                            id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="fa-solid fa-user mr-2" style="font-size: 16px;"></i>
+                            <span>
+                              <%= user.username %>
+                            </span>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/don-hang">Thông tin đơn hàng</a>
+                            <a class="dropdown-item" href="/info-user">Thông tin tài khoản</a>
+                            <a class="dropdown-item" href="/doi-mat-khau">Đổi mật khẩu</a>
+                            <a class="dropdown-item" href="/dang-nhap/logout">Đăng xuất</a>
+                          </div>
+                          <% } else { %>
+                            <a href="/dang-nhap" class="nav-link text-white">
+                              <i class="fa-solid fa-user" style="font-size: 16px;"></i>
+                              <span>Đăng nhập</span>
+                            </a>
+                            <% } %>
+                      </li>
+                    </ul>
+                  </div>
+                </nav>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="head-footer" class="sticky-top">
+      <div id="main-menu" class="container">
+        <nav>
+          <ul class="menu">
+            <% function renderMenu(items) { %>
+              <% items.forEach(item=> { %>
+                <% if (item.children && item.children.length> 0) { %>
+                  <li class="menu-item">
+                    <a href="<%= item.slug %>">
+                      <%= item.menu_name %>
+                    </a>
+                    <!-- Đệ quy render các menu con -->
+                    <ul class="sub-menu">
+                      <%= renderMenu(item.children) %>
+                    </ul>
+                  </li>
+                  <% } else { %>
+                    <li class="menu-item">
+                      <a href="<%= item.slug %>">
+                        <%= item.menu_name %>
+                      </a>
+                    </li>
+                    <% } %>
+                      <% }) %>
+                        <% } %>
+
+                          <!-- Render menu chính -->
+                          <%= renderMenu(main_menus) %>
+          </ul>
+
+        </nav>
+
+      </div>
+    </div>
+
+
+    <script>
+      document.getElementById('cart-link').addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const cart = localStorage.getItem('cart');
+        if (!cart) {
+          alert('Giỏ hàng trống!');
+          return;
+        }
+
+        const form = document.getElementById('cart-form');
+        const input = document.getElementById('cart-input');
+        input.value = cart;
+
+        form.submit();
+      });
+    </script>

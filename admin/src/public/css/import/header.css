@@ -1,0 +1,14 @@
+#head-body #logo img { max-width: 70px; height: auto; }
+#head-body #logo span {font-weight: bold; font-style: italic;font-size: 16px; }
+#head-body span {font-weight: bold;font-size: 14px; }
+
+#header {background-color: #003b71;}
+#header .icon {width: 30px;}
+#header a {text-decoration: none;}
+#header a span {color: white;}
+
+#head-footer {background-color: #003b71;}
+#header #search-wp input {width: 90%;}
+#head-footer #main-menu ul>li>a {color:#fffc ; font-size: 16px;}
+#head-footer #main-menu ul>li>a:hover{color: #fff;} 
+#head-footer #main-menu ul>li:not(:first-child){margin: 0px 10px;} 
