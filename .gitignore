@@ -1,1 +1,9 @@
 .env
+user/src/.env
+user/node_modules/
+
+admin/src/.env
+admin/node_modules/
+
+uploads/public/uploads
+

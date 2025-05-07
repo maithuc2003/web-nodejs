@@ -1,6 +1,5 @@
 # Không push file upload của người dùng
 pubilc/images/uploads/
 
-# Node.js
-node_modules/
+
 
